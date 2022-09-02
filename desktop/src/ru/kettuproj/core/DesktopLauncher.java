@@ -2,14 +2,14 @@ package ru.kettuproj.core;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import ru.kettuproj.core.Anvil;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setForegroundFPS(60);
+		//config.useVsync(true);
+		config.setForegroundFPS(144);
 		config.setTitle("Anvil");
-		new Lwjgl3Application(new Anvil(), config);
+		new Lwjgl3Application(new TestGame(), config);
 	}
 }
