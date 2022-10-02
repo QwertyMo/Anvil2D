@@ -6,12 +6,12 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.PolygonShape
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.Stage
 import ru.kettuproj.core.scene.AnvilScene
+import java.util.UUID
 
 abstract class AnvilObject(
-    val scene: AnvilScene
+    private val scene: AnvilScene,
+    bodyType: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
 ) : IAnvilObject {
 
     val position    : Vector2   = Vector2(0f,0f)
@@ -22,13 +22,18 @@ abstract class AnvilObject(
     var sprite  : Sprite? = null
     var body    : Body
 
+    val uuid: UUID = UUID.randomUUID()
+
     private var shape: ObjectShape = ObjectShape.BOX
     private var cSize: Vector2 = Vector2(0f,0f)
 
+    val contacts: MutableList<AnvilObject> = mutableListOf()
+
     init{
         val bodyDef = BodyDef()
-        bodyDef.type = BodyDef.BodyType.DynamicBody
+        bodyDef.type = bodyType
         bodyDef.position.set(position.x,position.y)
+
         body = scene.world.createBody(bodyDef)
     }
 
@@ -49,6 +54,16 @@ abstract class AnvilObject(
             body.createFixture(shape, 0f)
             shape.dispose()
         }
+
+        body.userData = this
+    }
+
+    fun addContact(obj: AnvilObject){
+        contacts.add(obj)
+    }
+
+    fun removeContact(obj: AnvilObject){
+        contacts.remove(obj)
     }
 
     fun setSpriteCollider(){

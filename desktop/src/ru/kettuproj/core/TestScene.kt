@@ -2,10 +2,9 @@ package ru.kettuproj.core
 
 import ru.kettuproj.core.scene.AnvilScene
 
-class TestScene : AnvilScene() {
+class TestScene() : AnvilScene() {
 
     val obj = TestObject(this)
-
     init{
         objects["test"] = obj
     }
@@ -20,13 +19,6 @@ class TestScene : AnvilScene() {
         val left  = - Anvil.input.buttonState("LEFT")
 
         obj.move((right + left), (up + down))
-        obj.rotate(1f)
-
-        if(!t) obj.scale(0.1f,0.1f)
-        else obj.scale(-0.1f,-0.1f)
-
-        if(obj.scale.x < 1f) t = false
-        if(obj.scale.x > 2f) t = true
     }
 
 }

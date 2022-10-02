@@ -2,6 +2,7 @@ package ru.kettuproj.core
 
 import com.badlogic.gdx.Input
 import ru.kettuproj.core.event.EventListener
+import ru.kettuproj.core.event.builtin.OnGameRunEvent
 import ru.kettuproj.core.event.builtin.input.InputEvent
 import ru.kettuproj.core.input.InputSignal
 
@@ -35,6 +36,13 @@ class TestGame : Anvil() {
                 }
             }
         })
+        eventManager.listen(object : EventListener<OnGameRunEvent> {
+            override fun handle(event: OnGameRunEvent) {
+                event.game.screen = TestScene()
+            }
+        })
+
     }
+
 
 }

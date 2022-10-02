@@ -24,9 +24,10 @@ open class AnvilScene(
     val camera:     OrthographicCamera              = OrthographicCamera()
     val viewport:   Viewport                        = FitViewport(resolution.x,resolution.y,camera)
     val world:      World                           = World(Vector2(0f, 0f), true)
-    val objects:    MutableMap<String, AnvilObject> = mutableMapOf()
 
     var cameraPos:  Vector2                         = Vector2(0f,0f)
+
+    val objects:    MutableMap<String, AnvilObject> = mutableMapOf()
 
     private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(true,true,true,true,true,true)
     private var tickrate: Int = 20
@@ -50,7 +51,6 @@ open class AnvilScene(
     }
 
     fun updateCamera(){
-        println(cameraPos)
         camera.position.set(cameraPos.x,cameraPos.y,0f)
         camera.update()
     }
@@ -60,27 +60,26 @@ open class AnvilScene(
     }
 
     open fun update(delta: Float){
-
     }
 
-    var accumulator = 0f
-    var skippedFrames = 0
-    val MAX_FRAMESKIPS = 20
-    var TIME_STEP = 1 / tickrate.toFloat()
+    private var accumulator = 0f
+    private var skippedFrames = 0
+    private val maxFrameSkip = 20
+    private var timeStep = 1 / tickrate.toFloat()
 
     override fun render(delta: Float) {
-        accumulator += delta;
-        skippedFrames = 0;
+        accumulator += delta
+        skippedFrames = 0
 
-        while (accumulator >= TIME_STEP && skippedFrames <= MAX_FRAMESKIPS)
+        while (accumulator >= timeStep && skippedFrames <= maxFrameSkip)
         {
-            accumulator -= TIME_STEP;
-            world.step(TIME_STEP,3,3)
+            accumulator -= timeStep
+            world.step(timeStep,3,3)
             for(obj in objects)
                 obj.value.update()
             updateCamera()
-            update(TIME_STEP)
-            skippedFrames++;
+            update(timeStep)
+            skippedFrames++
         }
 
         ScreenUtils.clear(0f, 0f, 0f, 1f)

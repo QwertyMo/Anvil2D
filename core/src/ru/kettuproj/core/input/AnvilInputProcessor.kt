@@ -6,6 +6,9 @@ import ru.kettuproj.core.event.builtin.input.InputEvent
 import ru.kettuproj.core.event.builtin.input.MouseMoveEvent
 import ru.kettuproj.core.event.builtin.input.ScrollEvent
 
+/**
+ * Default input processor. Call builtin events for keyboard and mouse
+ */
 class AnvilInputProcessor : InputProcessor {
 
     override fun keyDown(key: Int): Boolean {
