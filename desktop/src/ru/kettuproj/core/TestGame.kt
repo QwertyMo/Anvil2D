@@ -9,6 +9,7 @@ import ru.kettuproj.core.input.InputSignal
 class TestGame : Anvil() {
 
     init{
+
         input.inputs.registerAction("UP")
         input.inputs.registerAction("DOWN")
         input.inputs.registerAction("LEFT")
@@ -38,6 +39,15 @@ class TestGame : Anvil() {
         })
         eventManager.listen(object : EventListener<OnGameRunEvent> {
             override fun handle(event: OnGameRunEvent) {
+
+                window.setMaxFPS(60)
+                window.setVSync(true)
+
+                atlasManager.register("anim", "animation")
+                atlasManager.register("background", "background")
+                atlasManager.register("garden_bed", "dirt")
+                atlasManager.registerSprite("dirt","dirt","dirt")
+                atlasManager.registerAnimation("animation","a","test")
                 event.game.screen = TestScene()
             }
         })

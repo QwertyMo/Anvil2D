@@ -2,6 +2,7 @@ package ru.kettuproj.core
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.physics.box2d.BodyDef
+import ru.kettuproj.core.obj.AnvilAnimation
 import ru.kettuproj.core.obj.AnvilObject
 import ru.kettuproj.core.scene.AnvilScene
 
@@ -13,16 +14,16 @@ class TestObject(
     //var atlas: TextureAtlas = TextureAtlas("garden_bed.atlas")
 
     init{
-        //sprite = atlas.createSprite("dirt")
+        animation.addState("run", Anvil.atlasManager.getAnimation("test")!!)
+        animation.state = "run"
+        //sprite = Anvil.atlasManager.getSprite("dirt")
         setBoxCollider(16f,16f)
         setSpriteSettings()
         setSpriteCollider()
-
-
     }
 
     override fun update() {
-
+        super.update()
     }
 
 }

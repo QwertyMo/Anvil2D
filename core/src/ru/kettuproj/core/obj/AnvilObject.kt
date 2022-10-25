@@ -1,6 +1,6 @@
 package ru.kettuproj.core.obj
 
-import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -13,13 +13,17 @@ abstract class AnvilObject(
     private val scene: AnvilScene,
     bodyType: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
 ) : IAnvilObject {
-
-    val position    : Vector2   = Vector2(0f,0f)
+    val position: Vector2   = Vector2(0f,0f)
     val scale       : Vector2   = Vector2(2f,2f)
     val size        : Vector2   = Vector2(0f,0f)
     var rotation    : Float     = 0f
 
-    var sprite  : Sprite? = null
+    var sprite   : TextureAtlas.AtlasRegion? = null
+        set(value) {
+            setSpriteSettings()
+            field = value
+        }
+    var animation: AnvilAnimation = AnvilAnimation()
     var body    : Body
 
     val uuid: UUID = UUID.randomUUID()
@@ -76,16 +80,19 @@ abstract class AnvilObject(
 
     fun setBoxCollider(x: Float, y: Float){
         shape = ObjectShape.BOX
-        cSize.set((x)/2,(y)/2)
+        cSize.set((x),(y))
         setShape()
     }
 
     fun setSpriteSettings(){
-        if(sprite!=null) size.set(sprite!!.width,sprite!!.height)
+        if(sprite!=null) size.set(sprite!!.regionWidth.toFloat(),sprite!!.regionHeight.toFloat())
     }
 
     override fun update(){
-
+        position.set(body.position.x, body.position.y)
+        //TODO: Maybe animation update need to be move in draw call
+        if(animation.state.isNotEmpty() && !animation.stop)
+            sprite = animation.update()
     }
 
     fun rotate(angle: Float){
@@ -100,16 +107,12 @@ abstract class AnvilObject(
 
     fun move(x: Float, y: Float){
         body.setLinearVelocity(x*10,y*10)
-        position.set(body.position.x, body.position.y)
     }
 
     fun translate(x: Float, y: Float){
-        body.position.set(x,y)
+        body.setTransform(Vector2(x,y), body.angle)
     }
 
-    //	public void draw (TextureRegion region, float x, float y, float originX, float originY, float width, float height,
-    //		float scaleX, float scaleY, float rotation) {
-    //
     override fun draw() {
         if(sprite!=null){
             scene.batch.draw(

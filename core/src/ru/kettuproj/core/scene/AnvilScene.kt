@@ -1,6 +1,10 @@
 package ru.kettuproj.core.scene
 
+import box2dLight.RayHandler
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
@@ -14,7 +18,7 @@ import ru.kettuproj.core.obj.AnvilObject
 
 
 open class AnvilScene(
-    ratio: Float = 1f
+    val ratio: Float = 1f
 ) : Screen {
 
     var width = 256f
@@ -29,6 +33,8 @@ open class AnvilScene(
 
     val objects:    MutableMap<String, AnvilObject> = mutableMapOf()
 
+    var rayHandler: RayHandler = RayHandler(world)
+
     private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(true,true,true,true,true,true)
     private var tickrate: Int = 20
 
@@ -36,6 +42,9 @@ open class AnvilScene(
         camera.position.set(Vector3(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f));
         camera.update();
         viewport.apply()
+        rayHandler.useCustomViewport(viewport.screenX,viewport.screenY,viewport.screenWidth, viewport.screenHeight)
+        rayHandler.setAmbientLight(.5f);
+
     }
 
     fun setTickRate(value: Int){
@@ -71,24 +80,26 @@ open class AnvilScene(
         accumulator += delta
         skippedFrames = 0
 
-        while (accumulator >= timeStep && skippedFrames <= maxFrameSkip)
-        {
+        while (accumulator >= timeStep && skippedFrames <= maxFrameSkip) {
             accumulator -= timeStep
             world.step(timeStep,3,3)
-            for(obj in objects)
+            for(obj in objects) {
                 obj.value.update()
+            }
+            rayHandler.update()
             updateCamera()
             update(timeStep)
             skippedFrames++
         }
-
         ScreenUtils.clear(0f, 0f, 0f, 1f)
+        rayHandler.setCombinedMatrix(camera)
         batch.projectionMatrix = camera.combined
         batch.begin()
         for(obj in objects)
             obj.value.draw()
         batch.end()
         debugRenderer.render(world,camera.combined)
+        rayHandler.renderOnly()
 
     }
 
@@ -112,6 +123,7 @@ open class AnvilScene(
     }
 
     override fun dispose() {
+        rayHandler.dispose()
         batch.dispose()
         world.dispose()
     }
