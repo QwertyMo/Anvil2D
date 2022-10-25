@@ -60,18 +60,47 @@ class WindowManager {
         if(!fullscreen) Gdx.graphics.setWindowedMode(size.x.toInt(),size.y.toInt())
     }
 
+    /**
+     * Set screen ratio
+     *
+     * @param ratio ratio
+     *
+     * @author QwertyMo
+     */
     fun setRatio(ratio: Float){
         this.ratio = ratio
     }
 
+
+    /**
+     * Get screen ration
+     *
+     * @return ratio
+     *
+     * @author QwertyMo
+     */
     fun getRatio():Float{
         return ratio
     }
 
+    /**
+     * Set window title
+     *
+     * @param title title
+     *
+     * @author QwertyMo
+     */
     fun setTitle(title: String){
         Gdx.graphics.setTitle(title)
     }
 
+    /**
+     * Set FPS limit
+     *
+     * @param fps FPS limit
+     *
+     * @author QwertyMo
+     */
     fun setMaxFPS(fps: Int){
         Gdx.graphics.setForegroundFPS(fps)
     }

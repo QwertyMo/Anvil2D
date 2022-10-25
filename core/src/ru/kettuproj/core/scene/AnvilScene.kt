@@ -3,8 +3,6 @@ package ru.kettuproj.core.scene
 import box2dLight.RayHandler
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
@@ -14,14 +12,17 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.utils.ScreenUtils
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
+import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.obj.AnvilObject
 
 
 open class AnvilScene(
-    val ratio: Float = 1f
+    val ratio: Float = 0.5f
 ) : Screen {
 
-    var width = 256f
+    var moveMultiplier: Float = 100f
+
+    var width = 1024f
     var resolution: Vector2                         = Vector2(width, width * ratio)
 
     val batch:      SpriteBatch                     = SpriteBatch()
@@ -40,15 +41,17 @@ open class AnvilScene(
 
     init{
         camera.position.set(Vector3(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f));
-        camera.update();
+        camera.update()
         viewport.apply()
-        rayHandler.useCustomViewport(viewport.screenX,viewport.screenY,viewport.screenWidth, viewport.screenHeight)
-        rayHandler.setAmbientLight(.5f);
+    }
 
+    fun getCursor():Vector2{
+        return Vector2((Anvil.input.onScreenCursor.x - Gdx.graphics.width/2) * (resolution.x/Gdx.graphics.width), (Anvil.input.onScreenCursor.y - Gdx.graphics.height/2) * (resolution.y/Gdx.graphics.height))
     }
 
     fun setTickRate(value: Int){
         tickrate = value
+        timeStep = 1 / tickrate.toFloat()
     }
 
     fun moveCamera(x: Float, y: Float){
@@ -64,12 +67,9 @@ open class AnvilScene(
         camera.update()
     }
 
-    override fun show(){
+    override fun show(){}
 
-    }
-
-    open fun update(delta: Float){
-    }
+    open fun update(delta: Float){}
 
     private var accumulator = 0f
     private var skippedFrames = 0
@@ -81,26 +81,42 @@ open class AnvilScene(
         skippedFrames = 0
 
         while (accumulator >= timeStep && skippedFrames <= maxFrameSkip) {
-            accumulator -= timeStep
-            world.step(timeStep,3,3)
-            for(obj in objects) {
-                obj.value.update()
-            }
-            rayHandler.update()
-            updateCamera()
-            update(timeStep)
-            skippedFrames++
+            updateState()
         }
         ScreenUtils.clear(0f, 0f, 0f, 1f)
+        renderObjects()
+        renderRays()
+        renderDebug()
+    }
+
+    private fun renderDebug(){
+        debugRenderer.render(world,camera.combined)
+    }
+
+    private fun renderRays(){
+        rayHandler.useCustomViewport(viewport.screenX,viewport.screenY,viewport.screenWidth, viewport.screenHeight)
         rayHandler.setCombinedMatrix(camera)
+        rayHandler.render()
+    }
+
+    private fun renderObjects(){
         batch.projectionMatrix = camera.combined
         batch.begin()
         for(obj in objects)
             obj.value.draw()
         batch.end()
-        debugRenderer.render(world,camera.combined)
-        rayHandler.renderOnly()
+    }
 
+    private fun updateState(){
+        accumulator -= timeStep
+        world.step(timeStep,8,3)
+        for(obj in objects) {
+            obj.value.update()
+        }
+        rayHandler.update()
+        updateCamera()
+        update(timeStep)
+        skippedFrames++
     }
 
     override fun resize(width: Int, height: Int) {

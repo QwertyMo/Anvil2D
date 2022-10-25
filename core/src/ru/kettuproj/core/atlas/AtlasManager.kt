@@ -1,18 +1,17 @@
 package ru.kettuproj.core.atlas
 
-import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import java.util.logging.Level
 import java.util.logging.Logger
+
 
 class AtlasManager {
 
     private val atlases: MutableMap<String, TextureAtlas> = mutableMapOf()
     private val animations: MutableMap<String, com.badlogic.gdx.utils.Array<AtlasRegion>> = mutableMapOf()
     private val sprites: MutableMap<String, AtlasRegion> = mutableMapOf()
+
     fun register(path: String, name: String){
         try{
             atlases[name] = TextureAtlas("$path.atlas")

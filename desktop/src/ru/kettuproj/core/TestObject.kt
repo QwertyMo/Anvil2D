@@ -1,29 +1,41 @@
 package ru.kettuproj.core
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
-import ru.kettuproj.core.obj.AnvilAnimation
+import ru.kettuproj.core.event.EventListener
+import ru.kettuproj.core.event.builtin.input.MouseMoveEvent
 import ru.kettuproj.core.obj.AnvilObject
 import ru.kettuproj.core.scene.AnvilScene
+import kotlin.math.abs
+import kotlin.math.acos
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 class TestObject(
-    scene: AnvilScene,
+    private val scene: AnvilScene,
     type: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
-) : AnvilObject(scene, type) {
-
-    //var atlas: TextureAtlas = TextureAtlas("garden_bed.atlas")
+) : AnvilObject(
+    scene,
+    type) {
 
     init{
-        animation.addState("run", Anvil.atlasManager.getAnimation("test")!!)
-        animation.state = "run"
-        //sprite = Anvil.atlasManager.getSprite("dirt")
+        light.setConeLight()
+        //animation.addState("run", Anvil.atlasManager.getAnimation("test")!!)
+        //animation.state = "run"
+        sprite = Anvil.atlasManager.getSprite("dirt")
         setBoxCollider(16f,16f)
         setSpriteSettings()
         setSpriteCollider()
+        light.distance = 1000f
+
     }
 
+    var u = 0
+    var m = true
     override fun update() {
         super.update()
+        lookAt(scene.getCursor())
+
     }
 
 }
