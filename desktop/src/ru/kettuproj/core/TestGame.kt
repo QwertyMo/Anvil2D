@@ -39,8 +39,6 @@ class TestGame : Anvil() {
             }
         })
 
-
-
         eventManager.listen(object : EventListener<OnGameRunEvent> {
             override fun handle(event: OnGameRunEvent) {
 

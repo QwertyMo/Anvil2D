@@ -22,7 +22,8 @@ class TestObject2(
 
     override fun update() {
         super.update()
-        translate(scene.getCursor().x, scene.getCursor().y)
+        //translate(scene.getCursor().x, scene.getCursor().y)
+
 
     }
 

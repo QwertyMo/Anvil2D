@@ -23,7 +23,7 @@ class AnvilLight(
 ) {
     private var light: Light? = null
 
-    var rays : Int = 100
+    var rays : Int = 500
 
     /**
      * Color of lighting. Default it white

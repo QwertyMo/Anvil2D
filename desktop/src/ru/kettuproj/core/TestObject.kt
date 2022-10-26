@@ -3,6 +3,7 @@ package ru.kettuproj.core
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import ru.kettuproj.core.event.EventListener
+import ru.kettuproj.core.event.builtin.input.InputEvent
 import ru.kettuproj.core.event.builtin.input.MouseMoveEvent
 import ru.kettuproj.core.obj.AnvilObject
 import ru.kettuproj.core.scene.AnvilScene
@@ -19,6 +20,12 @@ class TestObject(
     type) {
 
     init{
+        Anvil.eventManager.listen(object : EventListener<InputEvent> {
+            override fun handle(event: InputEvent) {
+
+            }
+        })
+
         light.setConeLight()
         //animation.addState("run", Anvil.atlasManager.getAnimation("test")!!)
         //animation.state = "run"
@@ -28,6 +35,7 @@ class TestObject(
         setSpriteCollider()
         light.distance = 1000f
 
+
     }
 
     var u = 0
@@ -35,7 +43,8 @@ class TestObject(
     override fun update() {
         super.update()
         lookAt(scene.getCursor())
-
+        println("$position ${scene.getCursor()}")
+        scene.translateCamera(position)
     }
 
 }

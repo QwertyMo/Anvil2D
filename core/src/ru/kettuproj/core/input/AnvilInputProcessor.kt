@@ -41,17 +41,18 @@ class AnvilInputProcessor : InputProcessor {
 
     override fun touchDown(p0: Int, p1: Int, p2: Int, p3: Int): Boolean {
         //TODO: Add event
-        return true
+        return false
     }
 
     override fun touchUp(p0: Int, p1: Int, p2: Int, p3: Int): Boolean {
         //TODO: Add event
-        return true
+        return false
     }
 
-    override fun touchDragged(p0: Int, p1: Int, p2: Int): Boolean {
-        //TODO: Add event
-        return true
+    override fun touchDragged(x: Int, y: Int, button: Int): Boolean {
+        //Call event that moused move
+        Anvil.eventManager.call(MouseMoveEvent(x,y, true))
+        return false
     }
 
     override fun mouseMoved(x: Int, y: Int): Boolean {

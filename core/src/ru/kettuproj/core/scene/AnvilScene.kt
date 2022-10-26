@@ -29,6 +29,11 @@ open class AnvilScene(
 
     var moveMultiplier  : Float = 100f
     var width           : Float = 1024f
+        set(value){
+            resolution = Vector2(value, value * ratio)
+            viewport.setWorldSize(resolution.x, resolution.y)
+            field = value
+        }
 
     var resolution  : Vector2                         = Vector2(width, width * ratio)
     val batch       : SpriteBatch                     = SpriteBatch()
@@ -53,6 +58,14 @@ open class AnvilScene(
         viewport.apply()
     }
 
+    fun zoom(value: Float){
+        camera.zoom+=value
+    }
+
+    fun setZoom(value: Float){
+        camera.zoom = value
+    }
+
     /**
      * Get cursor position in world
      *
@@ -62,8 +75,8 @@ open class AnvilScene(
      */
     fun getCursor():Vector2{
         return Vector2(
-            (Anvil.input.onScreenCursor.x - Gdx.graphics.width/2 - cameraPos.x) * (resolution.x/Gdx.graphics.width),
-            (Anvil.input.onScreenCursor.y - Gdx.graphics.height/2 - cameraPos.y) * (resolution.y/Gdx.graphics.height)
+            ((Anvil.input.onScreenCursor.x - Gdx.graphics.width  / 2)) * (resolution.x / Gdx.graphics.width ) * camera.zoom + cameraPos.x,
+            ((Anvil.input.onScreenCursor.y - Gdx.graphics.height / 2)) * (resolution.y / Gdx.graphics.height) * camera.zoom + cameraPos.y
         )
     }
 
