@@ -11,6 +11,9 @@ import ru.kettuproj.core.scene.AnvilScene
 import java.util.UUID
 import kotlin.math.atan2
 
+/**
+ * Anvil object, put on scene. All objects at scene must extend it
+ */
 abstract class AnvilObject(
     private val scene: AnvilScene,
     bodyType: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
@@ -93,12 +96,14 @@ abstract class AnvilObject(
         val bodyDef = BodyDef()
         bodyDef.type = bodyType
         bodyDef.position.set(position.x,position.y)
-
-
         body = scene.world.createBody(bodyDef)
         light = AnvilLight(scene, body)
     }
 
+
+    /**
+     * Set collider Box2D shape
+     */
     private fun setShape(){
         for(i in body.fixtureList)
             body.destroyFixture(i)

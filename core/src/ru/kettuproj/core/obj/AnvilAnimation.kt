@@ -4,17 +4,38 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import java.util.logging.Level
 import java.util.logging.Logger
 
+//TODO: Improve some functions
+
+/**
+ * Animation system for object
+ *
+ * @author QwertyMo
+ */
 class AnvilAnimation {
+
+    /**
+     * Animation stop state. If stopped, animation freeze at current frame
+     *
+     * @author QwertyMo
+     */
     var stop = false
+
     private val animations: MutableMap<String, com.badlogic.gdx.utils.Array<TextureAtlas.AtlasRegion>> = mutableMapOf()
     private var currentFrame: Int = 0
     private var iterationsBetweenFrames:Int = 0
 
+    /**
+     * Speed of animation from 0.0f to 1.0f
+     */
     var speed: Float = 1f
         set(value){
             field = if(value>1f) 1f
             else kotlin.math.abs(value)
         }
+
+    /**
+     * Current animation state
+     */
     var state: String = ""
         set(value){
             iterationsBetweenFrames = 0
@@ -22,11 +43,27 @@ class AnvilAnimation {
             field = value
         }
 
+    /**
+     * Add new animation state
+     *
+     * @param name animation state
+     * @param animation atlas region array from atlas manager
+     *
+     * @author QwertyMo
+     *
+     * @see ru.kettuproj.core.atlas.AtlasManager
+     */
     fun addState(name: String, animation: com.badlogic.gdx.utils.Array<TextureAtlas.AtlasRegion>){
         animations[name] = animation
     }
 
+    /**
+     * Update animation. Called in AnvilObject
+     *
+     * @author QwertyMo
+     */
     fun update(): TextureAtlas.AtlasRegion?{
+        //TODO: Maybe need to be optimized
         try{
             val sprite = animations[state]!![currentFrame]
             if(stop) return sprite
