@@ -24,7 +24,7 @@ import ru.kettuproj.core.obj.AnvilObject
  * @author QwertyMo
  */
 open class AnvilScene(
-    val ratio: Float = 1f
+    private val ratio: Float = 1f
 ) : Screen {
 
     var moveMultiplier  : Float = 100f
@@ -37,31 +37,67 @@ open class AnvilScene(
 
     var resolution  : Vector2                         = Vector2(width, width * ratio)
     val batch       : SpriteBatch                     = SpriteBatch()
-    val camera      : OrthographicCamera              = OrthographicCamera()
-    val viewport    : Viewport                        = FitViewport(resolution.x,resolution.y,camera)
     val world       : World                           = World(Vector2(0f, 0f), true)
-    var cameraPos   : Vector2                         = Vector2(0f,0f)
-    val objects     : MutableMap<String, AnvilObject> = mutableMapOf()
     var rayHandler  : RayHandler                      = RayHandler(world)
 
+    private val camera      : OrthographicCamera              = OrthographicCamera()
+    private val viewport    : Viewport                        = FitViewport(resolution.x,resolution.y,camera)
+    private val cameraPos   : Vector2                         = Vector2(0f,0f)
+
+    private val objects     : MutableMap<String, AnvilObject> = mutableMapOf()
+    private val addable     : MutableMap<String, AnvilObject> = mutableMapOf()
+
+    //Update tick rate variables
     private var tickrate        : Int   = 20
     private var accumulator     : Float = 0f
     private var skippedFrames   : Int   = 0
     private val maxFrameSkip    : Int   = 20
     private var timeStep        : Float = 1 / tickrate.toFloat()
 
-    private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(true,true,true,true,true,true)
+    private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    )
 
     init{
-        camera.position.set(Vector3(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f));
+        camera.position.set(Vector3(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f))
         camera.update()
         viewport.apply()
     }
 
+    fun getObject(name: String): AnvilObject?{
+        return objects[name]
+    }
+
+    fun createObject(obj: AnvilObject, name: String? = null) : AnvilObject{
+        obj.setScene(this)
+        obj.name = name
+        addable[name ?: obj.uuid.toString()] = obj
+        return obj
+    }
+
+    /**
+     * Zoom camera at value
+     *
+     * @param value zoom value
+     *
+     * @author QwertyMo
+     */
     fun zoom(value: Float){
         camera.zoom+=value
     }
 
+    /**
+     * Set camera zoom
+     *
+     * @param value zoom value
+     *
+     * @author QwertyMo
+     */
     fun setZoom(value: Float){
         camera.zoom = value
     }
@@ -81,7 +117,7 @@ open class AnvilScene(
     }
 
     /**
-     * Set tickrate on scene
+     * Set tick rate on scene
      *
      * @param value tickrate
      *
@@ -151,6 +187,8 @@ open class AnvilScene(
     /**
      * Game update loop. Update render, and try to update logic
      *
+     * @param delta delta time
+     *
      * @author QwertyMo
      */
     override fun render(delta: Float) {
@@ -218,6 +256,10 @@ open class AnvilScene(
         for(obj in objects) {
             obj.value.update()
         }
+        for(obj in addable){
+            objects[obj.key] = obj.value
+        }
+        addable.clear()
         rayHandler.update()
         updateCamera()
         update(timeStep)

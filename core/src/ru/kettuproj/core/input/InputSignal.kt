@@ -12,5 +12,6 @@ package ru.kettuproj.core.input
  */
 data class InputSignal(
     val isController: Boolean,
+    val isMouse: Boolean,
     val key: Int
 )

@@ -9,5 +9,5 @@ package ru.kettuproj.core.event
  * @author QwertyMo
  */
 interface EventListener<T: AnvilEvent> {
-    fun handle(event: T): Unit
+    fun handle(event: T)
 }

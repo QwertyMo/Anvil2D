@@ -7,6 +7,12 @@ import java.util.logging.Level
 import java.util.logging.Logger
 
 
+//TODO: Maybe need to make auto registering?
+/**
+ * Atlas manager class for manage sprites loading
+ *
+ * @author QwertyMo
+ */
 class AtlasManager {
 
     private val atlases: MutableMap<String, TextureAtlas> = mutableMapOf()
@@ -24,6 +30,7 @@ class AtlasManager {
     fun register(path: String, name: String){
         try{
             atlases[name] = TextureAtlas("$path.atlas")
+
         }catch (e: Exception){
             Logger.getLogger(this.javaClass.name).log(Level.WARNING,"Can't initialize texture atlas $path: ${e.message}")
             throw AtlasException("Can't initialize texture atlas $path: ${e.message}")

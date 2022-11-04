@@ -3,6 +3,7 @@ package ru.kettuproj.core.input
 import com.badlogic.gdx.InputProcessor
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.event.builtin.input.InputEvent
+import ru.kettuproj.core.event.builtin.input.MouseClickEvent
 import ru.kettuproj.core.event.builtin.input.MouseMoveEvent
 import ru.kettuproj.core.event.builtin.input.ScrollEvent
 
@@ -15,7 +16,7 @@ class AnvilInputProcessor : InputProcessor {
 
     override fun keyDown(key: Int): Boolean {
         //Get action key from registered signals, and call input event, that key pressed
-        val action = Anvil.input.inputs.getAction(InputSignal(false, key))
+        val action = Anvil.input.inputs.getAction(InputSignal(isController = false, isMouse = false, key = key))
         if(action != null){
             Anvil.eventManager.call(InputEvent(action,1f))
             return true
@@ -25,7 +26,7 @@ class AnvilInputProcessor : InputProcessor {
 
     override fun keyUp(key: Int): Boolean {
         //Get action key from registered signals, and call input event, that key realized
-        val action = Anvil.input.inputs.getAction(InputSignal(false, key))
+        val action = Anvil.input.inputs.getAction(InputSignal(isController = false, isMouse = false, key = key))
         if(action != null){
             Anvil.eventManager.call(InputEvent(action,0f))
             return true
@@ -34,19 +35,33 @@ class AnvilInputProcessor : InputProcessor {
     }
 
 
+    //TODO: Fix multilang, and make event for it
     override fun keyTyped(p0: Char): Boolean {
-        //TODO: Add event
+        return false
+    }
+
+    override fun touchDown(posX: Int, posY: Int, point: Int, button: Int): Boolean {
+        //Get action key from registered signals, and call input event, that key pressed
+        val action = Anvil.input.inputs.getAction(InputSignal(isController = false, isMouse = true, key = button))
+        if(action != null){
+            Anvil.eventManager.call(InputEvent(action,1f))
+            return true
+        }
+        //Get mouse click, and call event
+        Anvil.eventManager.call(MouseClickEvent(posX,posY,button,true))
         return true
     }
 
-    override fun touchDown(p0: Int, p1: Int, p2: Int, p3: Int): Boolean {
-        //TODO: Add event
-        return false
-    }
-
-    override fun touchUp(p0: Int, p1: Int, p2: Int, p3: Int): Boolean {
-        //TODO: Add event
-        return false
+    override fun touchUp(posX: Int, posY: Int, point: Int, button: Int): Boolean {
+        //Get action key from registered signals, and call input event, that key realized
+        val action = Anvil.input.inputs.getAction(InputSignal(isController = false, isMouse = true, key = button))
+        if(action != null){
+            Anvil.eventManager.call(InputEvent(action,0f))
+            return true
+        }
+        //Get mouse click, and call event
+        Anvil.eventManager.call(MouseClickEvent(posX,posY,button,false))
+        return true
     }
 
     override fun touchDragged(x: Int, y: Int, button: Int): Boolean {

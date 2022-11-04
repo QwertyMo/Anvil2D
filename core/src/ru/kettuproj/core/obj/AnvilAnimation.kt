@@ -26,6 +26,8 @@ class AnvilAnimation {
 
     /**
      * Speed of animation from 0.0f to 1.0f
+     *
+     * @author QwertyMo
      */
     var speed: Float = 1f
         set(value){
@@ -35,6 +37,8 @@ class AnvilAnimation {
 
     /**
      * Current animation state
+     *
+     * @author QwertyMo
      */
     var state: String = ""
         set(value){

@@ -4,22 +4,19 @@ import box2dLight.ConeLight
 import box2dLight.Light
 import box2dLight.PointLight
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.physics.box2d.Body
 import ru.kettuproj.core.scene.AnvilScene
 
-//TODO: Maybe need to unbound it from body
+//TODO: Move it to LightObject
 
 /**
  * Light system for object in scene. Initialized in AnvilObject
  *
  * @param scene scene where light object need to be placed
- * @param body linked body
  *
  * @author QwertyMo
  */
 class AnvilLight(
-    private val scene: AnvilScene,
-    private val body:  Body
+    private val scene: AnvilScene
 ) {
     private var light: Light? = null
 
@@ -59,6 +56,8 @@ class AnvilLight(
             field = value
         }
 
+    var rotation: Float = 0f
+
     /**
      * Sets point light
      *
@@ -67,17 +66,43 @@ class AnvilLight(
     fun setPointLight(){
         light?.dispose()
         light = PointLight(scene.rayHandler,rays)
-        (light as PointLight).color = color
-        (light as PointLight).distance = distance
-        (light as PointLight).attachToBody(body)
+        light?.color = color
+        light?.distance = distance
     }
 
     /**
      * Set cone light
+     *
+     * @author QwertyMo
      */
     fun setConeLight(){
         light?.dispose()
         light = ConeLight(scene.rayHandler,rays,color,distance,0f,0f, 0f, degree)
-        (light as ConeLight).attachToBody(body)
+    }
+
+
+    fun translate(x: Float, y: Float){
+        if(light!=null)
+            light!!.setPosition(x, y)
+    }
+
+    fun move(x: Float, y: Float){
+        if(light!=null)
+            light!!.setPosition(
+                light!!.position.x + x,
+                light!!.position.y + y
+            )
+    }
+
+    fun rotate(angle: Float){
+        rotation+= angle
+        if(light is ConeLight)
+            light!!.direction = rotation
+    }
+
+    fun setAngle(angle: Float){
+        rotation = angle
+        if(light is ConeLight)
+            light!!.direction = rotation
     }
 }

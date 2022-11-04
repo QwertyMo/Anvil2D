@@ -11,16 +11,16 @@ class AnvilContactListener : ContactListener {
         val objectA = contact?.fixtureA?.body?.userData as AnvilObject?
         val objectB = contact?.fixtureB?.body?.userData as AnvilObject?
         if(objectA == null || objectB == null) return
-        objectA.addContact(objectB)
-        objectB.addContact(objectA)
+        //objectA.addContact(objectB)
+        //objectB.addContact(objectA)
     }
 
     override fun endContact(contact: Contact?) {
         val objectA = contact?.fixtureA?.body?.userData as AnvilObject?
         val objectB = contact?.fixtureB?.body?.userData as AnvilObject?
         if(objectA == null || objectB == null) return
-        objectA.removeContact(objectB)
-        objectB.removeContact(objectA)
+        //objectA.removeContact(objectB)
+        //objectB.removeContact(objectA)
     }
 
     override fun preSolve(contact: Contact?, oldManifold: Manifold?) {

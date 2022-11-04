@@ -20,7 +20,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "Anvil"
-        gdxVersion = '1.10.0'
+        gdxVersion = '1.11.0'
         roboVMVersion = '2.3.16'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.4'
@@ -67,3 +67,12 @@ project(":core") {
     }
 }
 
+project(":example") {
+    apply plugin: "kotlin"
+
+
+    dependencies {
+        implementation project(":core")
+        implementation project(":desktop")
+    }
+}

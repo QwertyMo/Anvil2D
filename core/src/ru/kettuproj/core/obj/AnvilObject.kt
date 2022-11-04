@@ -1,221 +1,161 @@
 package ru.kettuproj.core.obj
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.CircleShape
-import com.badlogic.gdx.physics.box2d.PolygonShape
-import ru.kettuproj.core.obj.light.AnvilLight
 import ru.kettuproj.core.scene.AnvilScene
 import java.util.UUID
 import kotlin.math.atan2
 
 /**
  * Anvil object, put on scene. All objects at scene must extend it
+ *
+ * @author QwertyMo
  */
-abstract class AnvilObject(
-    private val scene: AnvilScene,
-    bodyType: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
-) : IAnvilObject {
+abstract class AnvilObject: IAnvilObject {
+
+    protected lateinit var scene: AnvilScene
+        private set
+
+    open fun setScene(scene: AnvilScene){
+        this.scene = scene
+        create()
+    }
+
+    var name: String? = null
 
     /**
-     * Position of object in world
+     * Position of object.
+     * To change it, use move() and translate() functions
+     *
+     * @author QwertyMo
      */
     val position    : Vector2   = Vector2(0f,0f)
 
     /**
-     * Object scale
+     * Position of parent object.
+     * Used for better moving and rotating children objects
+     *
+     * @author QwertyMo
      */
-    val scale       : Vector2   = Vector2(2f,2f)
+    val parentPos   : Vector2   = Vector2(0f,0f)
 
     /**
-     * Size of object
+     * Real position object in world
      */
-    val size        : Vector2   = Vector2(0f,0f)
+    protected val realPos: Vector2 = Vector2(position.x + parentPos.x, position.y + parentPos.y)
 
     /**
-     * Rotation of object
+     * Rotation of object. If you need to rotate object
+     * to point, use lookAt() function
+     *
+     * @author QwertyMo
      */
-    var rotation    : Float     = 0f
-        set(value) {
-            body.setTransform(position.x,position.y, (value/180 * Math.PI).toFloat())
-            field=body.angle * (180f/Math.PI.toFloat())
-        }
+    open var rotation    : Float     = 0f
 
     /**
-     * Sprite of object
-     * Automatically set size of object
-     */
-    var sprite   : TextureAtlas.AtlasRegion? = null
-        set(value) {
-            field = value
-            setSpriteSettings()
-        }
-
-    /**
-     * Animation of object
-     */
-    var animation: AnvilAnimation = AnvilAnimation()
-
-    /**
-     * Box2D body of object
-     */
-    var body     : Body
-        private set
-
-
-    /**
-     * UUID of object
+     * UUID of object. Randomize it when initialize
+     *
+     * @author QwertyMo
      */
     val uuid: UUID = UUID.randomUUID()
 
+    /**
+     * Velocity of object in current tick. Edited by move() function.
+     * Update in update() function
+     *
+     * @author QwertyMo
+     */
+    protected val velocity: Vector2 = Vector2(0f,0f)
 
     /**
-     * Box2D shape of object
+     * List of objects, bind to this object
+     *
+     * @author QwertyMo
      */
-    private var shape: ObjectShape = ObjectShape.BOX
+    protected val objects: MutableMap<String, AnvilObject> = mutableMapOf()
 
-    /**
-     * Collider Box2D size of object
-     */
-    private var cSize: Vector2 = Vector2(0f,0f)
+    protected val addable: MutableMap<String, AnvilObject> = mutableMapOf()
 
-    /**
-     * Light system of object
-     */
-    val light: AnvilLight
+    var dynamicRotation = false
 
-
-    /**
-     * Collider contacts
-     */
-    val contacts: MutableList<AnvilObject> = mutableListOf()
-
-    init{
-        val bodyDef = BodyDef()
-        bodyDef.type = bodyType
-        bodyDef.position.set(position.x,position.y)
-        body = scene.world.createBody(bodyDef)
-        light = AnvilLight(scene, body)
+    fun getObject(name: String): AnvilObject?{
+        return objects[name]
     }
 
-
-    /**
-     * Set collider Box2D shape
-     */
-    private fun setShape(){
-        for(i in body.fixtureList)
-            body.destroyFixture(i)
-
-        if(shape == ObjectShape.BOX){
-            val shape = PolygonShape()
-            shape.setAsBox((cSize.x * scale.x)/2 , (cSize.y * scale.y)/2)
-            body.createFixture(shape, 0f)
-            shape.dispose()
-        }
-        else if(shape == ObjectShape.CIRCLE){
-            val shape = CircleShape()
-            shape.radius = cSize.x
-            body.createFixture(shape, 0f)
-            shape.dispose()
-        }
-
-        body.userData = this
+    fun createObject(obj: AnvilObject, name: String? = null) : AnvilObject{
+        obj.setScene(scene)
+        obj.name = name
+        obj.parentPos.set(position.x, position.y)
+        addable[name ?: obj.uuid.toString()] = obj
+        return obj
     }
 
     /**
      * Rotate object to position
+     *
+     * @param pos Position to rotate
+     *
+     * @author QwertyMo
      */
     fun lookAt(pos: Vector2){
-        rotation = atan2(position.y - pos.y,position.x - pos.x) * 180 / Math.PI.toFloat() + 180
-    }
-
-    fun addContact(obj: AnvilObject){
-        contacts.add(obj)
-    }
-
-    fun removeContact(obj: AnvilObject){
-        contacts.remove(obj)
-    }
-
-    /**
-     * Set box collider with sprite size
-     */
-    fun setSpriteCollider(){
-        if(sprite!=null){
-            shape = ObjectShape.BOX
-            cSize.set(size.x,size.y)
-            setShape()
+        rotation = try{
+            atan2(realPos.y - pos.y,realPos.x - pos.x) * 180 / Math.PI.toFloat() + 180
+        } catch (e: Exception) {
+            rotation
         }
     }
 
     /**
-     * Set box collider ob object
-     *
-     * @param x width of collider
-     * @param y height of collider
-     */
-    fun setBoxCollider(x: Float, y: Float){
-        shape = ObjectShape.BOX
-        cSize.set((x),(y))
-        setShape()
-    }
-
-    /**
-     * Set sprite settings
-     * Get size of sprite, and set it to object
-     */
-    fun setSpriteSettings(){
-        if(sprite!=null) size.set(sprite!!.regionWidth.toFloat(),sprite!!.regionHeight.toFloat())
-    }
-
-    /**
      * Logic update of object
+     *
+     * @author QwertyMo
      */
     override fun update(){
-        position.set(body.position.x, body.position.y)
-        //TODO: Maybe animation update need to be move in draw call
-        if(animation.state.isNotEmpty() && !animation.stop)
-            sprite = animation.update()
+        if(dynamicRotation) {
+            val rotated = Vector2(
+                (position.x * MathUtils.cos((rotation * Math.PI / 180f).toFloat())) + (position.y * MathUtils.cos((rotation * Math.PI / 180f).toFloat())),
+                (position.y * MathUtils.sin((rotation * Math.PI / 180f).toFloat())) + (position.x * MathUtils.sin((rotation * Math.PI / 180f).toFloat()))
+            )
+            translate(position.x + velocity.x, position.y + velocity.y)
+            realPos.set(rotated.x + parentPos.x, rotated.y + parentPos.y)
+        }
+        else {
+            translate(position.x + velocity.x, position.y + velocity.y)
+            realPos.set(position.x + parentPos.x, position.y + parentPos.y)
+        }
+        for(obj in objects) {
+            obj.value.parentPos.set(realPos.x, realPos.y)
+            obj.value.update()
+        }
+            for(obj in addable){
+                objects[obj.key] = obj.value
+        }
+        addable.clear()
+        velocity.set(0f,0f)
     }
 
-    /**
-     * Rotate object in degree
-     */
-    fun rotate(angle: Float){
-        body.angularVelocity = angle
-        rotation=body.angle * (180f/Math.PI.toFloat())
-    }
-
-    /**
-     * Scale object
-     *
-     * @param x Scale width
-     * @param y Scale height
-     */
-    fun scale(x: Float, y: Float){
-        scale.add(x,y)
-        setShape()
-    }
 
     /**
      * Move object
      *
      * @param x X-Axis
      * @param y Y-Axis
+     *
+     * @author QwertyMo
      */
-    fun move(x: Float, y: Float){
-        body.setLinearVelocity(x*scene.moveMultiplier,y*scene.moveMultiplier)
+    open fun move(x: Float, y: Float){
+        velocity.add(x, y)
     }
 
     /**
      * Move object
      *
-     * @param velocity movement velocity
+     * @param vel movement velocity
+     *
+     * @author QwertyMo
      */
-    fun move(velocity: Vector2){
-        body.setLinearVelocity(velocity.x*scene.moveMultiplier,velocity.y*scene.moveMultiplier)
+    open fun move(vel: Vector2){
+        velocity.add(vel.x, vel.y)
     }
 
     /**
@@ -223,37 +163,34 @@ abstract class AnvilObject(
      *
      * @param x X-Axis
      * @param y Y-Axis
+     *
+     * @author QwertyMo
      */
-    fun translate(x: Float, y: Float){
-        body.setTransform(Vector2(x,y), body.angle)
+    open fun translate(x: Float, y: Float){
+        position.set(x,y)
     }
 
     /**
      * Translate object to position
      *
      * @param pos position to translate
+     *
+     * @author QwertyMo
      */
-    fun translate(pos: Vector2){
-        body.setTransform(pos, body.angle)
+    open fun translate(pos: Vector2){
+        position.set(pos.x, pos.y)
     }
 
     /**
      * Draw object in scene
+     *
+     * @author QwertyMo
      */
     override fun draw() {
-        if(sprite!=null){
-            scene.batch.draw(
-                sprite,
-                position.x - (size.x)/2,
-                position.y - (size.y)/2,
-                size.x /2,
-                size.y /2,
-                size.x,
-                size.y,
-                scale.x,
-                scale.y,
-                rotation
-                )
-        }
+        for(obj in objects) obj.value.draw()
+    }
+
+    fun debugPosition() : String{
+        return "Object $name with UUID $uuid\n    localPos : $position\n    parentPos: $parentPos\n    realPos  : $realPos\n"
     }
 }
