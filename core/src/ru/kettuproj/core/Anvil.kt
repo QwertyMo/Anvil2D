@@ -2,14 +2,22 @@ package ru.kettuproj.core
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
+import de.jcm.discordgamesdk.Core
 import ru.kettuproj.core.assets.AssetsManager
-import ru.kettuproj.core.assets.atlas.AtlasManager
 import ru.kettuproj.core.event.EventManager
 import ru.kettuproj.core.event.builtin.OnGameRunEvent
 import ru.kettuproj.core.input.AnvilInputProcessor
 import ru.kettuproj.core.input.InputManager
 import ru.kettuproj.core.window.WindowManager
+import java.io.File
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
+import java.nio.file.Files
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import kotlin.system.exitProcess
+
 
 /**
  * Core class. Your game class must extend by this class.
