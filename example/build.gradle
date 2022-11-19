@@ -1,8 +1,8 @@
 sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.main.resources.srcDirs = ["../assets"]
+sourceSets.main.resources.srcDirs = ["./recourses"]
 
 project.ext.mainClassName = "ru.kettuproj.game.GameKt"
-project.ext.assetsDir = new File("../assets")
+project.ext.assetsDir = new File("./assets")
 
 import org.gradle.internal.os.OperatingSystem
 

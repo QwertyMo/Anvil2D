@@ -65,7 +65,7 @@ class GameScene : AnvilScene() {
 
 class testObj: TextObject(){
 
-    val txt = "some big text that i need to test"
+    val txt = "他媽的"
     var pos = 0
     override fun create() {
         super.create()
@@ -73,7 +73,7 @@ class testObj: TextObject(){
 
     override fun update(){
         if(pos<=txt.length-1){
-            text += txt.get(pos)
+            text += txt[pos]
             pos++
         }
         super.update()

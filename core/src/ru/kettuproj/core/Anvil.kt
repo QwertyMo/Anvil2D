@@ -2,7 +2,8 @@ package ru.kettuproj.core
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
-import ru.kettuproj.core.atlas.AtlasManager
+import ru.kettuproj.core.assets.AssetsManager
+import ru.kettuproj.core.assets.atlas.AtlasManager
 import ru.kettuproj.core.event.EventManager
 import ru.kettuproj.core.event.builtin.OnGameRunEvent
 import ru.kettuproj.core.input.AnvilInputProcessor
@@ -46,7 +47,7 @@ open class Anvil : Game(){
 		 *
 		 * @author QwertyMo
 		 */
-		val atlasManager 	= AtlasManager()
+		val assets 	= AssetsManager()
 
 		fun exit(){
 			exitProcess(0)
