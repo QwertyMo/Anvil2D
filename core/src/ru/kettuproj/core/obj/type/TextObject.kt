@@ -34,7 +34,7 @@ abstract class TextObject : AnvilObject() {
         param.characters = text
         param.borderColor = Color.WHITE
         param.borderWidth = 1f
-        param.size = 256
+        param.size = 256 
         param.color = Color.CYAN
         try {
             font = fontGen.generateFont(param)

@@ -193,6 +193,7 @@ open class AnvilScene(
      * @author QwertyMo
      */
     override fun render(delta: Float) {
+        Anvil.discord.discord?.runCallbacks()
         accumulator += delta
         skippedFrames = 0
         while (accumulator >= timeStep && skippedFrames <= maxFrameSkip) {

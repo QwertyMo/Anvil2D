@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import de.jcm.discordgamesdk.Core
 import ru.kettuproj.core.assets.AssetsManager
+import ru.kettuproj.core.connections.discord.DiscordAPI
 import ru.kettuproj.core.event.EventManager
 import ru.kettuproj.core.event.builtin.OnGameRunEvent
 import ru.kettuproj.core.input.AnvilInputProcessor
@@ -56,6 +57,8 @@ open class Anvil : Game(){
 		 * @author QwertyMo
 		 */
 		val assets 	= AssetsManager()
+
+		val discord = DiscordAPI()
 
 		fun exit(){
 			exitProcess(0)

@@ -16,6 +16,7 @@ class Anviltato: Anvil() {
     }
 
     fun run(){
+        discord.initialize(1043448956090322954)
         window.setMaxFPS(60)
         window.setVSync(true)
         window.setFullscreen(false)
