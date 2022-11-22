@@ -10,7 +10,11 @@ import kotlin.io.path.*
 
 
 class DiscordAPI {
-    var discord: Core? = null
+    var api: Core? = null
+        private set
+
+    var activity: Activity? = null
+        private set
     var initialized = false
         private set
 
@@ -20,7 +24,11 @@ class DiscordAPI {
             val params = CreateParams()
             params.clientID = clientId
             params.flags = CreateParams.getDefaultFlags()
-            discord = Core(params)
+            Core(params).let{
+                api = it
+                activity = Activity(it)
+            }
+
         }
     }
 
