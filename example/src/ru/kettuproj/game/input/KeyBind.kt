@@ -11,7 +11,8 @@ enum class ActionButtons{
     MOVE_DOWN,
     MOVE_LEFT,
     MOVE_RIGHT,
-    SHOOT
+    SHOOT,
+    FULL_SCREEN
 }
 
 class KeyBind{
@@ -22,7 +23,13 @@ class KeyBind{
         Anvil.input.inputs.registerAction(ActionButtons.MOVE_LEFT.name)
         Anvil.input.inputs.registerAction(ActionButtons.MOVE_RIGHT.name)
         Anvil.input.inputs.registerAction(ActionButtons.SHOOT.name)
+        Anvil.input.inputs.registerAction(ActionButtons.FULL_SCREEN.name)
 
+        Anvil.input.inputs.addButtonToAction(ActionButtons.FULL_SCREEN.name, InputSignal(
+            isController = false,
+            isMouse = false,
+            key = Input.Keys.L
+        ))
         Anvil.input.inputs.addButtonToAction(ActionButtons.MOVE_UP.name, InputSignal(
             isController = false,
             isMouse = false,

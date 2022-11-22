@@ -14,6 +14,8 @@ class AssetsManager {
 
     companion object{
         const val ASSETS_DIR = "assets"
+        const val DEFAULT_FONT = "calibri.ttf"
+        const val ENGINE_DIR = "engine/"
     }
 
     private val assets = loadAssets()

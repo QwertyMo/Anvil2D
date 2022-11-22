@@ -12,11 +12,12 @@ class Player : CollisionObject() {
     private val flashlight = Flashlight()
 
     override fun create() {
-        sprite = Anvil.assets.atlas.getSprite("Player")
+        sprite = Anvil.assets.atlas.getSprite("player")
         setSpriteCollision()
+
         createObject(flashlight, "flashlight")
 
-        flashlight.translate(32f,0f)
+        flashlight.translate(16f,0f)
 
     }
 

@@ -57,7 +57,6 @@ class AtlasManager(private val assets: List<String>) {
                     registerAnimation(name, reg.name, reg.name)
                 }
             }
-            disposeAtlas(name)
         }
 
     }
@@ -125,6 +124,7 @@ class AtlasManager(private val assets: List<String>) {
      * @author QwertyMo
      */
     fun getSprite(name: String):AtlasRegion?{
+        if( sprites[name] == null) Logger.getLogger(this.javaClass.name).log(Level.WARN,"Can't find sprite $name")
         return sprites[name]
     }
 

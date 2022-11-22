@@ -3,6 +3,7 @@ package ru.kettuproj.game
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.event.EventListener
 import ru.kettuproj.core.event.builtin.OnGameRunEvent
+import ru.kettuproj.game.atlas.Atlas
 import ru.kettuproj.game.input.KeyBind
 import ru.kettuproj.game.scene.game.GameScene
 
@@ -23,7 +24,6 @@ class Anviltato: Anvil() {
         assets.font.autoRegister()
         assets.autoRegister()
         KeyBind()
-        //Atlas()
 
         screen = GameScene()
     }

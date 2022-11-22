@@ -1,6 +1,7 @@
 package ru.kettuproj.game.scene.game
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Cursor
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
@@ -10,6 +11,8 @@ import ru.kettuproj.core.event.builtin.input.InputEvent
 import ru.kettuproj.core.obj.type.TextObject
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
+import ru.kettuproj.game.scene.game.obj.aim.AimDot
+import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -23,9 +26,8 @@ class GameScene : AnvilScene() {
 
     var mute = true
 
-    //val aim = createObject(AimDot(), "aim") as AimDot
-    //val player = createObject(Player(), "player") as Player
-    val tobj = createObject(testObj(), "text")
+    val aim = createObject(AimDot(), "aim") as AimDot
+    val player = createObject(Player(), "player") as Player
     init{
 
         setZoom(.5f)
@@ -39,10 +41,10 @@ class GameScene : AnvilScene() {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)
                 if(action == ActionButtons.ESC) Anvil.exit()
+                if(action == ActionButtons.FULL_SCREEN && event.value == 0f) Anvil.window.setFullscreen(!Anvil.window.isFullscreen())
             }
         })
-        tobj
-        //aim.player = player
+        aim.player = player
 
 
     }
@@ -60,22 +62,5 @@ class GameScene : AnvilScene() {
         //val ang = getAngle(player.position, pos) - 180
         //sound.setPan(id, ang/90 - 1, if(!mute) 1/(dist/range) else 0.0f)
 
-    }
-}
-
-class testObj: TextObject(){
-
-    val txt = "他媽的"
-    var pos = 0
-    override fun create() {
-        super.create()
-    }
-
-    override fun update(){
-        if(pos<=txt.length-1){
-            text += txt[pos]
-            pos++
-        }
-        super.update()
     }
 }

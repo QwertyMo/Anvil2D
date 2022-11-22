@@ -20,7 +20,7 @@ class AimDot : SpriteObject() {
     var player: Player? = null
 
     override fun create() {
-        sprite = Anvil.assets.atlas.getSprite("AimDot")
+        sprite = Anvil.assets.atlas.getSprite("aim_dot")
 
         leftBorder  = createObject(AimBorder(), "left_border" ) as AimBorder
         rightBorder = createObject(AimBorder(), "right_border") as AimBorder

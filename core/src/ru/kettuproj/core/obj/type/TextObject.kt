@@ -9,37 +9,44 @@ import ru.kettuproj.core.assets.AssetsManager
 import ru.kettuproj.core.obj.AnvilObject
 
 abstract class TextObject : AnvilObject() {
+
     var text:  String = ""
         set(value){
             glyphLayout.setText(font, value)
             updateFont()
             field = value
         }
-    var scale: Float  = 1f
+    var scale: Float = 0.5f
         set(value) {
             font.data.setScale(value)
             field = value
         }
 
-    private val glyphLayout: GlyphLayout = GlyphLayout()
+    var resolution: Int = 32
+        set(value){
+            field = value
+            updateFont()
+        }
 
+    var color: Color = Color.WHITE
+        set(value){
+            field = value
+            updateFont()
+        }
+
+    private val glyphLayout: GlyphLayout = GlyphLayout()
     private val param = FreeTypeFontGenerator.FreeTypeFontParameter()
 
-    private var font: BitmapFont =
-        FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ASSETS_DIR}/lobster.ttf")).generateFont(param)
+    private var fontGen =
+        FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ENGINE_DIR}${AssetsManager.DEFAULT_FONT}"))
 
-    private var fontGen = FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ASSETS_DIR}/lobster.ttf"))
-
+    private var font: BitmapFont = fontGen.generateFont(param)
     private fun updateFont(){
         param.characters = text
-        param.borderColor = Color.WHITE
-        param.borderWidth = 1f
-        param.size = 256 
-        param.color = Color.CYAN
-        try {
-            font = fontGen.generateFont(param)
-        }catch (e:Exception){}
-        scale = 0.04f
+        param.size = resolution
+        param.color = color
+        try { font = fontGen.generateFont(param) }catch (_:Exception){}
+        font.data.setScale(scale)
     }
 
     override fun create() {

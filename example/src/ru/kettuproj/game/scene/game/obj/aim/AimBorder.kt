@@ -5,6 +5,6 @@ import ru.kettuproj.core.obj.type.SpriteObject
 
 class AimBorder : SpriteObject() {
     override fun create() {
-        sprite = Anvil.assets.atlas.getSprite("AimBorder")
+        sprite = Anvil.assets.atlas.getSprite("aim_border")
     }
 }
