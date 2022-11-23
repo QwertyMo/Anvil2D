@@ -1,14 +1,11 @@
 package ru.kettuproj.game.scene.game
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Cursor
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.event.EventListener
 import ru.kettuproj.core.event.builtin.input.InputEvent
-import ru.kettuproj.core.obj.type.TextObject
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot

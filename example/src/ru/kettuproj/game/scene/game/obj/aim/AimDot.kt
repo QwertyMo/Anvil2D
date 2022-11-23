@@ -2,6 +2,7 @@ package ru.kettuproj.game.scene.game.obj.aim
 
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
+import ru.kettuproj.core.obj.sprite.AnvilSprite
 import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import kotlin.math.pow
@@ -20,7 +21,8 @@ class AimDot : SpriteObject() {
     var player: Player? = null
 
     override fun create() {
-        sprite = Anvil.assets.atlas.getSprite("aim_dot")
+        sprite = AnvilSprite("aim_dot")
+
 
         leftBorder  = createObject(AimBorder(), "left_border" ) as AimBorder
         rightBorder = createObject(AimBorder(), "right_border") as AimBorder

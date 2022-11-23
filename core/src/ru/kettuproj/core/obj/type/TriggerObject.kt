@@ -10,7 +10,21 @@ import ru.kettuproj.core.obj.AnvilObject
 import ru.kettuproj.core.obj.ObjectShape
 import ru.kettuproj.core.scene.AnvilScene
 
-abstract class TriggerObject : SpriteObject() {
+abstract class TriggerObject : AnvilObject() {
+
+    /**
+     * Object scale
+     *
+     * @author QwertyMo
+     */
+    val scale       : Vector2   = Vector2(1f,1f)
+
+    /**
+     * Size of object
+     *
+     * @author QwertyMo
+     */
+    val size        : Vector2 = Vector2(0f,0f)
 
     /**
      * Box2D body of object
@@ -90,13 +104,6 @@ abstract class TriggerObject : SpriteObject() {
         }
 
         body!!.userData = this
-    }
-
-    fun setSpriteTrigger(){
-        if(sprite == null) return
-        shape = ObjectShape.BOX
-        cSize = Vector2(sprite!!.regionWidth.toFloat(),sprite!!.regionHeight.toFloat())
-        setShape()
     }
 
     override fun translate(pos: Vector2) {

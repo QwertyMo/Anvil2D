@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.obj.AnvilAnimation
 import ru.kettuproj.core.obj.AnvilObject
+import ru.kettuproj.core.obj.sprite.AnvilSprite
 
 abstract class SpriteObject: AnvilObject() {
 
@@ -27,7 +28,7 @@ abstract class SpriteObject: AnvilObject() {
      *
      * @author QwertyMo
      */
-    var sprite   : TextureAtlas.AtlasRegion? = null
+    var sprite   : AnvilSprite = AnvilSprite()
         set(value) {
             field = value
             setSpriteSettings()
@@ -47,24 +48,37 @@ abstract class SpriteObject: AnvilObject() {
      * @author QwertyMo
      */
     private fun setSpriteSettings(){
-        if(sprite!=null) size.set(sprite!!.regionWidth.toFloat(),sprite!!.regionHeight.toFloat())
+        size.set(sprite.sprite.width,sprite.sprite.height)
     }
 
     override fun draw() {
-        if(sprite!=null){
-            scene.batch.draw(
-                sprite,
-                realPos.x - (size.x)/2,
-                realPos.y - (size.y)/2,
-                size.x /2,
-                size.y /2,
-                size.x,
-                size.y,
-                scale.x,
-                scale.y,
-                rotation
-            )
-        }
+        val c = scene.batch.color
+        scene.batch.color = sprite.color
+        scene.batch.draw(
+            sprite.tint,
+            realPos.x - (size.x)/2,
+            realPos.y - (size.y)/2,
+            size.x /2,
+            size.y /2,
+            size.x,
+            size.y,
+            scale.x,
+            scale.y,
+            rotation
+        )
+        scene.batch.color = c
+        scene.batch.draw(
+            sprite.sprite,
+            realPos.x - (size.x)/2,
+            realPos.y - (size.y)/2,
+            size.x /2,
+            size.y /2,
+            size.x,
+            size.y,
+            scale.x,
+            scale.y,
+            rotation
+        )
         super.draw()
     }
 
