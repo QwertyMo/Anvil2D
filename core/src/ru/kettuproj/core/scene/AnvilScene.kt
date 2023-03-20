@@ -4,7 +4,6 @@ import box2dLight.RayHandler
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
@@ -15,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.obj.AnvilObject
+import kotlin.math.roundToInt
 
 /**
  * AnvilScene class for make game scene.
@@ -54,6 +54,14 @@ open class AnvilScene(
     private var skippedFrames   : Int   = 0
     private val maxFrameSkip    : Int   = 20
     private var timeStep        : Float = 1 / tickrate.toFloat()
+
+    private var deltaTPSAccumulator : Float = 0f
+    private var deltaTPSUpdates     : Int   = 0
+    private var currentTPS          : Float = tickrate.toFloat()
+
+    private var deltaFPSAccumulator : Float = 0f
+    private var deltaFPSUpdates     : Int   = 0
+    private var currentFPS          : Int   = 0
 
     private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(
         true,
@@ -129,6 +137,14 @@ open class AnvilScene(
         timeStep = 1 / tickrate.toFloat()
     }
 
+    fun getTickRate():Int{
+        return tickrate
+    }
+
+    fun getFrameRate():Int{
+        return 0
+    }
+
     /**
      * Move camera from it position
      *
@@ -186,23 +202,6 @@ open class AnvilScene(
     }
 
     /**
-     * Game update loop. Update render, and try to update logic
-     *
-     * @param delta delta time
-     *
-     * @author QwertyMo
-     */
-    override fun render(delta: Float) {
-        Anvil.discord.api?.runCallbacks()
-        accumulator += delta
-        skippedFrames = 0
-        while (accumulator >= timeStep && skippedFrames <= maxFrameSkip) {
-            updateState()
-        }
-        render()
-    }
-
-    /**
      * Render objects and rays
      *
      * @author QwertyMo
@@ -245,6 +244,45 @@ open class AnvilScene(
         for(obj in objects)
             obj.value.draw()
         batch.end()
+    }
+
+    fun getCurrentTPS(): Float{
+        return currentTPS
+    }
+
+    fun getCurrentFPS():Int{
+        return currentFPS
+    }
+
+    /**
+     * Game update loop. Update render, and try to update logic
+     *
+     * @param delta delta time
+     *
+     * @author QwertyMo
+     */
+    override fun render(delta: Float) {
+        Anvil.discord.api?.runCallbacks()
+        accumulator += delta
+        skippedFrames = 0
+        deltaTPSAccumulator+=delta
+        deltaFPSAccumulator+=delta
+        deltaFPSUpdates++
+        if(deltaFPSAccumulator>=1){
+            currentFPS = deltaFPSUpdates
+            deltaFPSUpdates = 0
+            deltaFPSAccumulator = 0f
+        }
+        while (accumulator >= timeStep && skippedFrames <= maxFrameSkip) {
+            deltaTPSUpdates++
+            if(deltaTPSAccumulator>=1){
+                currentTPS = ((deltaTPSUpdates - ((deltaTPSAccumulator - 1) * (deltaTPSUpdates))) * 100f).roundToInt() / 100f
+                deltaTPSAccumulator = 0f
+                deltaTPSUpdates = 0
+            }
+            updateState()
+        }
+        render()
     }
 
     /**

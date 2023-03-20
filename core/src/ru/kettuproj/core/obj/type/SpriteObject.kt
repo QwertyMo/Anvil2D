@@ -52,33 +52,35 @@ abstract class SpriteObject: AnvilObject() {
     }
 
     override fun draw() {
-        val c = scene.batch.color
-        scene.batch.color = sprite.color
-        scene.batch.draw(
-            sprite.tint,
-            realPos.x - (size.x)/2,
-            realPos.y - (size.y)/2,
-            size.x /2,
-            size.y /2,
-            size.x,
-            size.y,
-            scale.x,
-            scale.y,
-            rotation
-        )
-        scene.batch.color = c
-        scene.batch.draw(
-            sprite.sprite,
-            realPos.x - (size.x)/2,
-            realPos.y - (size.y)/2,
-            size.x /2,
-            size.y /2,
-            size.x,
-            size.y,
-            scale.x,
-            scale.y,
-            rotation
-        )
+        if(visible){
+            val c = scene.batch.color
+            scene.batch.color = sprite.color
+            scene.batch.draw(
+                sprite.tint,
+                realPos.x - (size.x)/2,
+                realPos.y - (size.y)/2,
+                size.x /2,
+                size.y /2,
+                size.x,
+                size.y,
+                scale.x,
+                scale.y,
+                rotation
+            )
+            scene.batch.color = c
+            scene.batch.draw(
+                sprite.sprite,
+                realPos.x - (size.x)/2,
+                realPos.y - (size.y)/2,
+                size.x /2,
+                size.y /2,
+                size.x,
+                size.y,
+                scale.x,
+                scale.y,
+                rotation
+            )
+        }
         super.draw()
     }
 

@@ -31,6 +31,8 @@ abstract class AnvilObject: IAnvilObject {
      */
     val position    : Vector2   = Vector2(0f,0f)
 
+    var visible     : Boolean   = true
+
     /**
      * Position of parent object.
      * Used for better moving and rotating children objects
