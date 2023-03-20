@@ -51,7 +51,7 @@ abstract class SpriteObject: AnvilObject() {
         size.set(sprite.sprite.width,sprite.sprite.height)
     }
 
-    override fun draw() {
+    override fun draw(delta: Float) {
         if(visible){
             val c = scene.batch.color
             scene.batch.color = sprite.color
@@ -81,7 +81,7 @@ abstract class SpriteObject: AnvilObject() {
                 rotation
             )
         }
-        super.draw()
+        super.draw(delta)
     }
 
 

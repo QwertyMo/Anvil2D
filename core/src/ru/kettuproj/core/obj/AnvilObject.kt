@@ -69,6 +69,8 @@ abstract class AnvilObject: IAnvilObject {
      */
     protected val velocity: Vector2 = Vector2(0f,0f)
 
+    protected val renderPos: Vector2 = Vector2(0f,0f)
+
     /**
      * List of objects, bind to this object
      *
@@ -122,6 +124,7 @@ abstract class AnvilObject: IAnvilObject {
             realPos.set(rotated.x + parentPos.x, rotated.y + parentPos.y)
         }
         else {
+            renderPos.set(position.x + parentPos.x, position.y + parentPos.y)
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(position.x + parentPos.x, position.y + parentPos.y)
         }
@@ -188,8 +191,8 @@ abstract class AnvilObject: IAnvilObject {
      *
      * @author QwertyMo
      */
-    override fun draw() {
-        for(obj in objects) obj.value.draw()
+    override fun draw(delta: Float) {
+        for(obj in objects) obj.value.draw(delta)
     }
 
     fun debugPosition() : String{

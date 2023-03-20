@@ -53,8 +53,8 @@ abstract class TextObject : AnvilObject() {
 
     }
 
-    override fun draw() {
+    override fun draw(delta: Float) {
         if(visible) font.draw(scene.batch, text, (position.x - glyphLayout.width/2), (position.y - glyphLayout.height/2))
-        super.draw()
+        super.draw(delta)
     }
 }

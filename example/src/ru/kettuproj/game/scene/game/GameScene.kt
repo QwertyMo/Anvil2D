@@ -43,7 +43,7 @@ class GameScene : AnvilScene() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         rayHandler.setAmbientLight(.5f)
-        setTickRate(20)
+        setTickRate(5)
         Anvil.eventManager.listen(object : EventListener<InputEvent> {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)

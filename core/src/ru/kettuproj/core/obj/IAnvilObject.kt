@@ -9,7 +9,7 @@ interface IAnvilObject {
 
     fun update()
 
-    fun draw()
+    fun draw(delta: Float)
 
     fun create()
 }

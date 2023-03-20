@@ -206,9 +206,9 @@ open class AnvilScene(
      *
      * @author QwertyMo
      */
-    private fun render(){
+    private fun renderScene(delta: Float){
         ScreenUtils.clear(0f, 0f, 0f, 1f)
-        renderObjects()
+        renderObjects(delta)
         renderRays()
         renderDebug()
     }
@@ -238,11 +238,11 @@ open class AnvilScene(
      *
      * @author QwertyMo
      */
-    private fun renderObjects(){
+    private fun renderObjects(delta: Float){
         batch.projectionMatrix = camera.combined
         batch.begin()
         for(obj in objects)
-            obj.value.draw()
+            obj.value.draw(delta)
         batch.end()
     }
 
@@ -282,7 +282,7 @@ open class AnvilScene(
             }
             updateState()
         }
-        render()
+        renderScene(delta)
     }
 
     /**
