@@ -57,28 +57,28 @@ abstract class SpriteObject: AnvilObject() {
             scene.batch.color = sprite.color
             scene.batch.draw(
                 sprite.tint,
-                realPos.x - (size.x)/2,
-                realPos.y - (size.y)/2,
+                renderPos.x - (size.x)/2,
+                renderPos.y - (size.y)/2,
                 size.x /2,
                 size.y /2,
                 size.x,
                 size.y,
                 scale.x,
                 scale.y,
-                rotation
+                renderRotation
             )
             scene.batch.color = c
             scene.batch.draw(
                 sprite.sprite,
-                realPos.x - (size.x)/2,
-                realPos.y - (size.y)/2,
+                renderPos.x - (size.x)/2,
+                renderPos.y - (size.y)/2,
                 size.x /2,
                 size.y /2,
                 size.x,
                 size.y,
                 scale.x,
                 scale.y,
-                rotation
+                renderRotation
             )
         }
         super.draw(delta)

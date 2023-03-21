@@ -12,6 +12,7 @@ class Player : SpriteObject() {
 
     private val playerVelocity = Vector2(0f,0f)
     private val flashlight = Flashlight()
+    val speed = 6f
 
     override fun create() {
         sprite = AnvilSprite("obj", "obj_tint")
@@ -40,10 +41,10 @@ class Player : SpriteObject() {
         if(g==def && b!=def && d) b--
         if(b==def && d) d = false
         sprite.color = Color(1f/255*r,1f/255*g,1f/255*b,1f)
-        playerVelocity.add(0f, Anvil.input.buttonState(ActionButtons.MOVE_UP.name))
-        playerVelocity.add(0f, -Anvil.input.buttonState(ActionButtons.MOVE_DOWN.name))
-        playerVelocity.add(Anvil.input.buttonState(ActionButtons.MOVE_RIGHT.name), 0f)
-        playerVelocity.add(-Anvil.input.buttonState(ActionButtons.MOVE_LEFT.name), 0f)
+        playerVelocity.add(0f, Anvil.input.buttonState(ActionButtons.MOVE_UP.name) * speed)
+        playerVelocity.add(0f, -Anvil.input.buttonState(ActionButtons.MOVE_DOWN.name)* speed)
+        playerVelocity.add(Anvil.input.buttonState(ActionButtons.MOVE_RIGHT.name)* speed, 0f)
+        playerVelocity.add(-Anvil.input.buttonState(ActionButtons.MOVE_LEFT.name)* speed, 0f)
         move(playerVelocity)
 
         lookAt(scene.getCursor())
@@ -53,5 +54,9 @@ class Player : SpriteObject() {
         flashlight.rotation = rotation
 
         super.update()
+    }
+
+    override fun draw(delta: Float) {
+        super.draw(delta)
     }
 }

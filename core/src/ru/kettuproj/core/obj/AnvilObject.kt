@@ -53,6 +53,10 @@ abstract class AnvilObject: IAnvilObject {
      * @author QwertyMo
      */
     open var rotation    : Float     = 0f
+        set(value) {
+            renderRotationVelocity = value - rotation
+            field = value
+        }
 
     /**
      * UUID of object. Randomize it when initialize
@@ -69,7 +73,11 @@ abstract class AnvilObject: IAnvilObject {
      */
     protected val velocity: Vector2 = Vector2(0f,0f)
 
+    protected var renderRotation: Float = 0f
+    private var renderRotationVelocity: Float = 0f
+    private val renderVelocity: Vector2 = Vector2(0f, 0f)
     protected val renderPos: Vector2 = Vector2(0f,0f)
+    private var renderDelta: Float = 0f
 
     /**
      * List of objects, bind to this object
@@ -124,7 +132,12 @@ abstract class AnvilObject: IAnvilObject {
             realPos.set(rotated.x + parentPos.x, rotated.y + parentPos.y)
         }
         else {
+            renderDelta = 0f
+            renderRotationVelocity = 0f
+            renderVelocity.set(velocity.x, velocity.y)
             renderPos.set(position.x + parentPos.x, position.y + parentPos.y)
+            renderRotation = rotation
+
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(position.x + parentPos.x, position.y + parentPos.y)
         }
@@ -192,6 +205,13 @@ abstract class AnvilObject: IAnvilObject {
      * @author QwertyMo
      */
     override fun draw(delta: Float) {
+        var temp = delta * scene.getCurrentTPS()
+        renderDelta+=delta
+        if(renderDelta>=1){
+            temp -= renderDelta - 1
+        }
+        renderRotation += renderRotationVelocity * temp
+        renderPos.add(temp * renderVelocity.x, temp * renderVelocity.y)
         for(obj in objects) obj.value.draw(delta)
     }
 

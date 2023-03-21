@@ -20,9 +20,12 @@ abstract class LightObject : AnvilObject() {
 
     override fun update() {
         super.update()
-        light?.translate(realPos.x, realPos.y)
-        light?.setAngle(rotation)
+    }
 
+    override fun draw(delta: Float) {
+        super.draw(delta)
+        light?.translate(renderPos.x, renderPos.y)
+        light?.setAngle(renderRotation)
     }
 
 }

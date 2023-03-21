@@ -19,8 +19,8 @@ class Anviltato: Anvil() {
     fun run(){
         discord.initialize(1043448956090322954)
         discord.activity?.largeImage = "img"
-        window.setMaxFPS(60)
-        window.setVSync(true)
+        window.setMaxFPS(120)
+        window.setVSync(false)
         window.setFullscreen(false)
         assets.autoRegister()
         KeyBind()
