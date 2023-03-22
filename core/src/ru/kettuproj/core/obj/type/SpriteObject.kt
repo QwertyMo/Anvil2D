@@ -83,6 +83,4 @@ abstract class SpriteObject: AnvilObject() {
         }
         super.draw(delta)
     }
-
-
 }

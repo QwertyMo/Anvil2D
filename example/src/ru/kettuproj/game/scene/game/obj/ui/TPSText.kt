@@ -8,9 +8,13 @@ class TPSText : TextObject() {
         scale = 1f
     }
 
-    override fun update() {
-        super.update()
+    override fun render() {
         text = "${scene.getCurrentTPS()} TPS\n${scene.getCurrentFPS()} FPS"
     }
+
+    override fun logic() {
+
+    }
+
 
 }

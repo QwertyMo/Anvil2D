@@ -12,6 +12,7 @@ import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot
+import ru.kettuproj.game.scene.game.obj.common.Colis
 import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import ru.kettuproj.game.scene.game.obj.ui.TPSText
 import kotlin.math.atan2
@@ -30,12 +31,12 @@ class GameScene : AnvilScene() {
     val aim = createObject(AimDot(), "aim") as AimDot
     val player = createObject(Player(), "player") as Player
     val text = createObject(TPSText(), "tps_text") as TPSText
+    val col = createObject(Colis(), "Col") as Colis
     init{
 
-        for(i in 0..100){
-            val t = createObject(testObj()) as testObj
-            t.visible = false
-        }
+        col.size.set(16f,16f)
+        col.translate(48f,48f)
+        println(col.debugPosition())
 
         setZoom(.5f)
         width = 512f
@@ -43,7 +44,7 @@ class GameScene : AnvilScene() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         rayHandler.setAmbientLight(.5f)
-        setTickRate(2)
+        setTickRate(20)
         Anvil.eventManager.listen(object : EventListener<InputEvent> {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)
@@ -52,8 +53,6 @@ class GameScene : AnvilScene() {
             }
         })
         aim.player = player
-
-
     }
     private fun getDist(pos1: Vector2, pos2: Vector2): Float{
         return sqrt((pos2.x - pos1.x).pow(2) + (pos2.y - pos1.y).pow(2))
@@ -73,6 +72,13 @@ class GameScene : AnvilScene() {
 }
 
 class testObj: SpriteObject(){
+    override fun render() {
+
+    }
+
+    override fun logic() {
+    }
+
     override fun create() {
         sprite = AnvilSprite("obj", "obj_tint")
     }

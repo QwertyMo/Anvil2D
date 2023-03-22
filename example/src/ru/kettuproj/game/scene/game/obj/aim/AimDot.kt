@@ -23,17 +23,18 @@ class AimDot : SpriteObject() {
     override fun create() {
         sprite = AnvilSprite("aim_dot")
 
-
-        leftBorder  = createObject(AimBorder(), "left_border" ) as AimBorder
-        rightBorder = createObject(AimBorder(), "right_border") as AimBorder
-        rightBorder.dynamicRotation = true
-        leftBorder.dynamicRotation  = true
+        //leftBorder  = createObject(AimBorder(), "left_border" ) as AimBorder
+        //rightBorder = createObject(AimBorder(), "right_border") as AimBorder
+        //rightBorder.dynamicRotation = true
+        //leftBorder.dynamicRotation  = true
     }
 
-    override fun update() {
-        calcReduction()
+    override fun render() {
         moveAim()
-        super.update()
+    }
+
+    override fun logic() {
+        //calcReduction()
     }
 
     private fun calcReduction(){
@@ -45,10 +46,10 @@ class AimDot : SpriteObject() {
 
     private fun moveAim(){
         translate(scene.getCursor())
-        leftBorder.translate(-reduction, 0f)
-        rightBorder.translate(-reduction, 0f)
-        leftBorder.rotation =  (player?.rotation ?: 0f) - 90f
-        rightBorder.rotation = (player?.rotation ?: 0f) + 90f
+        //leftBorder.translate(-reduction, 0f)
+        //rightBorder.translate(-reduction, 0f)
+        //leftBorder.rotation =  (player?.rotation ?: 0f) - 90f
+        //rightBorder.rotation = (player?.rotation ?: 0f) + 90f
     }
 
     private fun getDist(pos1: Vector2, pos2: Vector2): Float{

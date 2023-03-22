@@ -11,5 +11,9 @@ interface IAnvilObject {
 
     fun draw(delta: Float)
 
+    fun render()
+
+    fun logic()
+
     fun create()
 }

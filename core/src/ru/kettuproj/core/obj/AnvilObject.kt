@@ -54,6 +54,7 @@ abstract class AnvilObject: IAnvilObject {
      */
     open var rotation    : Float     = 0f
         set(value) {
+            renderRotation = field
             renderRotationVelocity = value - rotation
             field = value
         }
@@ -73,8 +74,9 @@ abstract class AnvilObject: IAnvilObject {
      */
     protected val velocity: Vector2 = Vector2(0f,0f)
 
+    private val renderParentPos: Vector2 = Vector2(0f,0f)
     protected var renderRotation: Float = 0f
-    private var renderRotationVelocity: Float = 0f
+    protected var renderRotationVelocity: Float = 0f
     private val renderVelocity: Vector2 = Vector2(0f, 0f)
     protected val renderPos: Vector2 = Vector2(0f,0f)
     private var renderDelta: Float = 0f
@@ -123,20 +125,22 @@ abstract class AnvilObject: IAnvilObject {
      * @author QwertyMo
      */
     override fun update(){
+        logic()
+        renderDelta = 0f
+        renderRotationVelocity = 0f
+        renderVelocity.set(velocity.x, velocity.y)
         if(dynamicRotation) {
             val rotated = Vector2(
                 (position.x * MathUtils.cos((rotation * Math.PI / 180f).toFloat())) + (position.y * MathUtils.cos((rotation * Math.PI / 180f).toFloat())),
                 (position.y * MathUtils.sin((rotation * Math.PI / 180f).toFloat())) + (position.x * MathUtils.sin((rotation * Math.PI / 180f).toFloat()))
             )
+            //renderPos.set(rotated.x + renderParentPos.x, rotated.y + renderParentPos.y)
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(rotated.x + parentPos.x, rotated.y + parentPos.y)
         }
         else {
-            renderDelta = 0f
-            renderRotationVelocity = 0f
-            renderVelocity.set(velocity.x, velocity.y)
-            renderPos.set(position.x + parentPos.x, position.y + parentPos.y)
-            renderRotation = rotation
+            //renderPos.set(position.x + renderParentPos.x, position.y + renderParentPos.y)
+            //renderRotation = rotation
 
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(position.x + parentPos.x, position.y + parentPos.y)
@@ -206,16 +210,29 @@ abstract class AnvilObject: IAnvilObject {
      */
     override fun draw(delta: Float) {
         var temp = delta * scene.getCurrentTPS()
-        renderDelta+=delta
+        renderDelta+=temp
         if(renderDelta>=1){
             temp -= renderDelta - 1
+            renderDelta = 1f
         }
         renderRotation += renderRotationVelocity * temp
-        renderPos.add(temp * renderVelocity.x, temp * renderVelocity.y)
-        for(obj in objects) obj.value.draw(delta)
+        renderPos.set(
+            ((realPos.x - renderVelocity.x) + renderParentPos.x + renderDelta * renderVelocity.x) - parentPos.x,
+            ((realPos.y - renderVelocity.y) + renderParentPos.y + renderDelta * renderVelocity.y) - parentPos.y
+        )
+
+        render()
+        for(obj in objects) {
+            obj.value.renderParentPos.set(renderPos.x, renderPos.y)
+            obj.value.draw(delta)
+        }
     }
 
     fun debugPosition() : String{
-        return "Object $name with UUID $uuid\n    localPos : $position\n    parentPos: $parentPos\n    realPos  : $realPos\n"
+        return "Object $name with UUID $uuid\n    " +
+                "localPos : $position\n    " +
+                "parentPos: $parentPos\n    " +
+                "renderPos: $renderPos\n    " +
+                "realPos  : $realPos\n"
     }
 }

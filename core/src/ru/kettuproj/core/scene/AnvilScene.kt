@@ -49,7 +49,7 @@ open class AnvilScene(
     private val addable     : MutableMap<String, AnvilObject> = mutableMapOf()
 
     //Update tick rate variables
-    private var tickrate        : Int   = 20
+    private var tickrate        : Int   = 10
     private var accumulator     : Float = 0f
     private var skippedFrames   : Int   = 0
     private val maxFrameSkip    : Int   = 20

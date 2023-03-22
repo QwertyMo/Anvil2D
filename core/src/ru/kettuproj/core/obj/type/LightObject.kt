@@ -17,15 +17,11 @@ abstract class LightObject : AnvilObject() {
         light = AnvilLight(scene)
         super.setScene(scene)
     }
-
-    override fun update() {
-        super.update()
-    }
-
     override fun draw(delta: Float) {
         super.draw(delta)
         light?.translate(renderPos.x, renderPos.y)
         light?.setAngle(renderRotation)
+        println("rend rot: $renderRotation\nreal rot: $rotation")
     }
 
 }

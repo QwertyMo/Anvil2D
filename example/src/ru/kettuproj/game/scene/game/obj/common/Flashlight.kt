@@ -12,8 +12,11 @@ class Flashlight : LightObject() {
         dynamicRotation = true
     }
 
-    override fun update() {
-        super.update()
+    override fun render() {
+
+    }
+
+    override fun logic() {
 
     }
 }
