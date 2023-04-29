@@ -13,16 +13,13 @@ import ru.kettuproj.game.scene.game.obj.common.Flashlight
 class Player : SpriteObject() {
 
     private val playerVelocity = Vector2(0f,0f)
-    private val flashlight = Box()
     private val colision = Colis()
     val speed = 3f
 
     override fun create() {
         sprite = AnvilSprite("obj", "obj_tint")
-        createObject(flashlight, "flashlight")
         createObject(colision, "col")
         colision.size.set(size.x, size.y)
-        flashlight.translate(16f,0f)
 
     }
 
@@ -54,8 +51,6 @@ class Player : SpriteObject() {
         lookAt(scene.getCursor())
 
         playerVelocity.set(0f,0f)
-
-        flashlight.rotation = rotation
     }
 
     override fun render() {

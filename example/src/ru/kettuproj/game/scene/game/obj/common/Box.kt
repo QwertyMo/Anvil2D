@@ -4,22 +4,23 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.obj.sprite.AnvilSprite
+import ru.kettuproj.core.obj.type.ShapeObject
 import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.game.input.ActionButtons
 
-class Box : SpriteObject() {
+class Box : ShapeObject() {
 
     override fun create() {
-        sprite = AnvilSprite("obj", "obj_tint")
-        size.set(4f, 4f)
+        size.set(128f, 128f)
         dynamicRotation = true
+    }
+
+    override fun render() {
+
     }
 
     override fun logic() {
 
     }
 
-    override fun render() {
-        println(debugPosition())
-    }
 }

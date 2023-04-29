@@ -12,6 +12,7 @@ import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot
+import ru.kettuproj.game.scene.game.obj.common.Box
 import ru.kettuproj.game.scene.game.obj.common.Colis
 import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import ru.kettuproj.game.scene.game.obj.ui.TPSText
@@ -32,8 +33,9 @@ class GameScene : AnvilScene() {
     val player = createObject(Player(), "player") as Player
     val text = createObject(TPSText(), "tps_text") as TPSText
     val col = createObject(Colis(), "Col") as Colis
+     val box = createObject(Box(), "box") as Box
     init{
-
+        box.translate(0f, 0f)
         col.size.set(16f,16f)
         col.translate(48f,48f)
         println(col.debugPosition())

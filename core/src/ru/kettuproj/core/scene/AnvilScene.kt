@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
@@ -36,12 +37,14 @@ open class AnvilScene(
             field = value
         }
 
-    var resolution  : Vector2                         = Vector2(width, width * ratio)
-    val batch       : SpriteBatch                     = SpriteBatch()
-    val world       : World                           = World(Vector2(0f, 0f), true)
-    var rayHandler  : RayHandler                      = RayHandler(world)
+    var resolution      : Vector2                         = Vector2(width, width * ratio)
+    val batch           : SpriteBatch                     = SpriteBatch()
+    val world           : World                           = World(Vector2(0f, 0f), true)
+    var rayHandler      : RayHandler                      = RayHandler(world)
+    val shapeRenderer   : ShapeRenderer                   = ShapeRenderer()
 
-    private val camera      : OrthographicCamera              = OrthographicCamera()
+
+    val camera      : OrthographicCamera              = OrthographicCamera()
     private val viewport    : Viewport                        = FitViewport(resolution.x,resolution.y,camera)
     private val cameraPos   : Vector2                         = Vector2(0f,0f)
 
@@ -240,6 +243,8 @@ open class AnvilScene(
      */
     private fun renderObjects(delta: Float){
         batch.projectionMatrix = camera.combined
+        shapeRenderer.projectionMatrix = batch.projectionMatrix
+        shapeRenderer.transformMatrix = batch.transformMatrix
         batch.begin()
         for(obj in objects)
             obj.value.draw(delta)
