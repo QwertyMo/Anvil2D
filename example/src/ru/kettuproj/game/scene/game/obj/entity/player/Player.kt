@@ -54,6 +54,6 @@ class Player : SpriteObject() {
     }
 
     override fun render() {
-
+        //println(renderRotation)
     }
 }

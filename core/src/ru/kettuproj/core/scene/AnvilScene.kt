@@ -246,8 +246,10 @@ open class AnvilScene(
         shapeRenderer.projectionMatrix = batch.projectionMatrix
         shapeRenderer.transformMatrix = batch.transformMatrix
         batch.begin()
-        for(obj in objects)
+        for(obj in objects) {
+            if(obj.value.inRenderLogic) obj.value.update()
             obj.value.draw(delta)
+        }
         batch.end()
     }
 
@@ -267,7 +269,9 @@ open class AnvilScene(
      * @author QwertyMo
      */
     override fun render(delta: Float) {
-        Anvil.discord.api?.runCallbacks()
+        try {
+            if(Anvil.discord.isInstalled) Anvil.discord.api?.runCallbacks()
+        }catch (e: Exception){}
         accumulator += delta
         skippedFrames = 0
         deltaTPSAccumulator+=delta
@@ -299,7 +303,7 @@ open class AnvilScene(
         accumulator -= timeStep
         world.step(timeStep,8,3)
         for(obj in objects) {
-            obj.value.update()
+            if(!obj.value.inRenderLogic) obj.value.update()
         }
         for(obj in addable){
             objects[obj.key] = obj.value

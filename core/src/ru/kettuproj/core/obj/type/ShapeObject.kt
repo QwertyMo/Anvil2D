@@ -29,7 +29,7 @@ abstract class ShapeObject : AnvilObject() {
         scene.batch.end()
         scene.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         scene.shapeRenderer.color = color
-        scene.shapeRenderer.rect(position.x, position.y, size.x, size.y);
+        scene.shapeRenderer.rect(position.x, position.y, size.x, size.y)
         scene.shapeRenderer.end();
         scene.batch.begin()
     }

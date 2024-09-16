@@ -15,7 +15,7 @@ class Activity(private val api: Core) {
             api.activityManager().updateActivity(activity)
         }
 
-    var description = ""
+    var description = "Just dev at Anvil2D"
         set(value){
             field = value
             activity.state = value
@@ -36,7 +36,7 @@ class Activity(private val api: Core) {
             api.activityManager().updateActivity(activity)
         }
 
-    var largeImageDescription: String = ""
+    var largeImageDescription: String = "desc for large image"
         set(value){
             if(value.length == 1) return
             field = value
@@ -51,7 +51,7 @@ class Activity(private val api: Core) {
             api.activityManager().updateActivity(activity)
         }
 
-    var smallImageDescription: String = ""
+    var smallImageDescription: String = "desc for large image"
         set(value){
             if(value.length == 1) return
             field = value
@@ -67,5 +67,9 @@ class Activity(private val api: Core) {
         activity.assets().largeText = largeImageDescription
         activity.assets().smallText = smallImageDescription
         api.activityManager().updateActivity(activity)
+    }
+
+    override fun toString(): String {
+        return "{state: \"$state\", description: \"$description\"}"
     }
 }

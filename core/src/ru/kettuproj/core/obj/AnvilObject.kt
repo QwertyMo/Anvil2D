@@ -21,6 +21,8 @@ abstract class AnvilObject: IAnvilObject {
         create()
     }
 
+    var inRenderLogic = false
+
     var name: String? = null
 
     /**
@@ -56,6 +58,7 @@ abstract class AnvilObject: IAnvilObject {
         set(value) {
             renderRotation = field
             renderRotationVelocity = value - rotation
+            println("value: $value rotation: $rotation velocity: $renderRotationVelocity")
             field = value
         }
 
@@ -127,7 +130,7 @@ abstract class AnvilObject: IAnvilObject {
     override fun update(){
         logic()
         renderDelta = 0f
-        renderRotationVelocity = 0f
+        //renderRotationVelocity = 0f
         renderVelocity.set(velocity.x, velocity.y)
         if(dynamicRotation) {
             val rotated = Vector2(
@@ -216,6 +219,7 @@ abstract class AnvilObject: IAnvilObject {
             renderDelta = 1f
         }
         renderRotation += renderRotationVelocity * temp
+        //if(name == "player") println(renderRotationVelocity)
         renderPos.set(
             ((realPos.x - renderVelocity.x) + renderParentPos.x + renderDelta * renderVelocity.x) - parentPos.x,
             ((realPos.y - renderVelocity.y) + renderParentPos.y + renderDelta * renderVelocity.y) - parentPos.y
