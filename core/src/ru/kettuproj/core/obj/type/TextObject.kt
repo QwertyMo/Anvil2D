@@ -12,49 +12,56 @@ abstract class TextObject : AnvilObject() {
 
     var text:  String = ""
         set(value){
-            glyphLayout.setText(font, value)
-            updateFont()
+            param.characters = text
             field = value
         }
     var scale: Float = 0.5f
         set(value) {
-            font.data.setScale(value)
             field = value
         }
 
     var resolution: Int = 32
         set(value){
+            param.size = resolution
             field = value
-            updateFont()
         }
 
     var color: Color = Color.WHITE
         set(value){
+            param.color = color
             field = value
-            updateFont()
         }
 
-    private val glyphLayout: GlyphLayout = GlyphLayout()
-    private val param = FreeTypeFontGenerator.FreeTypeFontParameter()
 
-    private var fontGen =
-        FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ENGINE_DIR}${AssetsManager.DEFAULT_FONT}"))
-
-    private var font: BitmapFont = fontGen.generateFont(param)
-    private fun updateFont(){
+    val param = FreeTypeFontGenerator.FreeTypeFontParameter()
+    init{
         param.characters = text
         param.size = resolution
         param.color = color
-        try { font = fontGen.generateFont(param) }catch (_:Exception){}
-        font.data.setScale(scale)
+        updateFont()
+    }
+
+    private fun updateFont(){
+
     }
 
     override fun create() {
 
     }
-
+    var font: BitmapFont? = null
     override fun draw(delta: Float) {
-        if(visible) font.draw(scene.batch, text, (position.x - glyphLayout.width/2), (position.y - glyphLayout.height/2))
+        font?.dispose()
+        val fontGen = FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ENGINE_DIR}${AssetsManager.DEFAULT_FONT}"))
+        val glyphLayout = GlyphLayout()
+        try {
+            font = fontGen.generateFont(param)
+            glyphLayout.setText(font, text)
+        }catch (e:Exception){
+        }
+        fontGen.dispose()
+        font?.data?.setScale(scale)
+
+        if(visible) font?.draw(scene.batch, text, (position.x - glyphLayout.width/2), (position.y - glyphLayout.height/2))
         super.draw(delta)
     }
 }
