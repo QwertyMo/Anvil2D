@@ -10,13 +10,22 @@ import org.apache.log4j.Logger
 
 /**
  * Atlas manager class for manage sprites loading
- *
- * @author QwertyMo
  */
 class AtlasManager(private val assets: List<String>) {
 
+    /**
+     * Store loaded atlases
+     */
     private val atlases     : MutableMap<String, TextureAtlas> = mutableMapOf()
+
+    /**
+     * Store loaded animations
+     */
     private val animations  : MutableMap<String, com.badlogic.gdx.utils.Array<AtlasRegion>> = mutableMapOf()
+
+    /**
+     * Store loaded sprites
+     */
     private val sprites     : MutableMap<String, AtlasRegion> = mutableMapOf()
 
 
@@ -25,8 +34,6 @@ class AtlasManager(private val assets: List<String>) {
      *
      * @param path path to atlas
      * @param name name to link to atlas
-     *
-     * @author QwertyMo
      */
     fun register(path: String, name: String, autoReg: Boolean = false){
         try{
@@ -41,8 +48,6 @@ class AtlasManager(private val assets: List<String>) {
     /**
      * Auto registering of atlas assets. After loading dispose all atlases.
      * For names use atlas and regions names
-     *
-     * @author QwertyMo
      */
     fun autoRegister(){
         Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start auto registering atlases from internal storage")
@@ -67,8 +72,6 @@ class AtlasManager(private val assets: List<String>) {
      * @param atlas atlas name, registered earlier
      * @param region region of atlas
      * @param name name to link it to sprite
-     *
-     * @author QwertyMo
      */
     fun registerSprite(atlas: String, region: String, name: String){
         try{
@@ -82,14 +85,12 @@ class AtlasManager(private val assets: List<String>) {
 
     /**
      * Register animation from atlas.
-     * Regions of atlas, which has format ${NAME}_${INDEX} can combined
+     * Regions of atlas, which has format ${NAME}_${INDEX} can combine
      * in animation. Index starts from 0
      *
      * @param atlas atlas name, registered earlier
      * @param region region of atlas
      * @param name name to link it to animation
-     *
-     * @author QwertyMo
      */
     fun registerAnimation(atlas: String, region: String, name: String){
         try{
@@ -107,8 +108,6 @@ class AtlasManager(private val assets: List<String>) {
      * @param name animation name
      *
      * @return array of atlas regions, if it registered
-     *
-     * @author QwertyMo
      */
     fun getAnimation(name: String):com.badlogic.gdx.utils.Array<AtlasRegion>?{
         return animations[name]
@@ -120,8 +119,6 @@ class AtlasManager(private val assets: List<String>) {
      * @param name sprite name
      *
      * @return atlas region, if it registered
-     *
-     * @author QwertyMo
      */
     fun getSprite(name: String):AtlasRegion?{
         if( sprites[name] == null) Logger.getLogger(this.javaClass.name).log(Level.WARN,"Can't find sprite $name")
@@ -132,8 +129,6 @@ class AtlasManager(private val assets: List<String>) {
      * Remove sprite from sprite list
      *
      * @param name sprite name
-     *
-     * @author QwertyMo
      */
     fun unloadSprite(name: String){
         sprites.remove(name)
@@ -143,8 +138,6 @@ class AtlasManager(private val assets: List<String>) {
      * Remove animation from animation list
      *
      * @param name animation name
-     *
-     * @author QwertyMo
      */
     fun unloadAnimation(name: String){
         animations.remove(name)
@@ -154,8 +147,6 @@ class AtlasManager(private val assets: List<String>) {
      * Dispose atlas
      *
      * @param name atlas name
-     *
-     * @author QwertyMo
      */
     fun disposeAtlas(name: String){
         atlases[name]?.dispose()
@@ -163,8 +154,6 @@ class AtlasManager(private val assets: List<String>) {
 
     /**
      * Remove all sprites
-     *
-     * @author QwertyMo
      */
     fun unloadAllSprites(){
         sprites.clear()
@@ -173,8 +162,6 @@ class AtlasManager(private val assets: List<String>) {
 
     /**
      * Remove all animations
-     *
-     * @author QwertyMo
      */
     fun unloadAllAnimations(){
         animations.clear()
@@ -183,8 +170,6 @@ class AtlasManager(private val assets: List<String>) {
 
     /**
      * Dispose all atlases
-     *
-     * @author QwertyMo
      */
     fun disposeAtlases(){
         for(i in atlases)

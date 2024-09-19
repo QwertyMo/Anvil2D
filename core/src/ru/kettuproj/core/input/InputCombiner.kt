@@ -2,8 +2,6 @@ package ru.kettuproj.core.input
 
 /**
  * Combiner inputs from keyboard, mouse, and controller
- *
- * @author QwertyMo
  */
 class InputCombiner {
     private val keys: MutableMap<String, MutableList<InputSignal>> = mutableMapOf()
@@ -13,8 +11,6 @@ class InputCombiner {
      * You need to register action before binding.
      *
      * @param name Action name
-     *
-     * @author QwertyMo
      */
     fun registerAction(name: String){
         keys[name] = mutableListOf()
@@ -26,8 +22,6 @@ class InputCombiner {
      * @param signal Signal for checking
      *
      * @return action name or null, if not bind
-     *
-     * @author QwertyMo
      *
      * @see ru.kettuproj.core.input.InputSignal
      */
@@ -44,8 +38,6 @@ class InputCombiner {
      * @param name Action name
      * @param signal Button for checking
      * @param rewrite if button already in use, this function rewrite it or not
-     *
-     * @author QwertyMo
      *
      * @see ru.kettuproj.core.input.InputSignal
      */
@@ -66,8 +58,6 @@ class InputCombiner {
      * @param name Action name
      * @param signal Button to unbind
      *
-     * @author QwertyMo
-     *
      * @see ru.kettuproj.core.input.InputSignal
      */
     fun removeButtonFromAction(name: String, signal: InputSignal){
@@ -81,8 +71,6 @@ class InputCombiner {
      *
      * @return map of all actions with list of buttons
      *
-     * @author QwertyMo
-     *
      * @see ru.kettuproj.core.input.InputSignal
      */
     fun getKeys():Map<String, List<InputSignal>>{
@@ -95,8 +83,6 @@ class InputCombiner {
      * @param signal searching button
      *
      * @return action name or null, if not find
-     *
-     * @author QwertyMo
      *
      * @see ru.kettuproj.core.input.InputSignal
      */

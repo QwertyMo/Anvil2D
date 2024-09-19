@@ -1,12 +1,9 @@
 package ru.kettuproj.core.event
 
-//TODO: Add sample
 /**
- * Event handler
+ * Event handler. Check example game to see, how to use this
  *
  * @see ru.kettuproj.core.event.EventManager
- *
- * @author QwertyMo
  */
 interface EventListener<T: AnvilEvent> {
     fun handle(event: T)

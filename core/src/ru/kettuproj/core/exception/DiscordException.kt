@@ -1,4 +1,6 @@
 package ru.kettuproj.core.exception
 
-class DiscordException(message: String) : Exception(message) {
-}
+/**
+ * Exception, called when Discord API has error
+ */
+class DiscordException(message: String) : Exception(message)

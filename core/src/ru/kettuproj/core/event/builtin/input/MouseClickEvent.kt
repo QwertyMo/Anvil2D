@@ -11,8 +11,6 @@ import ru.kettuproj.core.event.AnvilEvent
  * @param isDown click state of button
  *
  * @see ru.kettuproj.core.event.EventManager
- *
- * @author QwertyMo
  */
 data class MouseClickEvent(
   val screenX: Int,

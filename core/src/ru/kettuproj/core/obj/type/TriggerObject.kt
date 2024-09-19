@@ -14,15 +14,11 @@ abstract class TriggerObject : AnvilObject() {
 
     /**
      * Object scale
-     *
-     * @author QwertyMo
      */
     val scale       : Vector2   = Vector2(1f,1f)
 
     /**
      * Size of object
-     *
-     * @author QwertyMo
      */
     val size        : Vector2 = Vector2(0f,0f)
 
@@ -79,8 +75,6 @@ abstract class TriggerObject : AnvilObject() {
 
     /**
      * Set collider Box2D shape
-     *
-     * @author QwertyMo
      */
     private fun setShape(){
 

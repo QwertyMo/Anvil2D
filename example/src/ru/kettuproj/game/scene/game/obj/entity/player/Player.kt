@@ -23,25 +23,7 @@ class Player : SpriteObject() {
 
     }
 
-    val def = 128
-    val lim = 255
-
-    var r = def
-    var g = def
-    var b = def
-
-    var d = false
-
     override fun logic() {
-        if(r<lim && !d) r++
-        if(r==lim && g<lim && !d) g++
-        if(g==lim && b<lim && !d) b++
-        if(b==lim && !d) d = true
-        if(r!=def && d)r--
-        if(r==def && g!=def && d) g--
-        if(g==def && b!=def && d) b--
-        if(b==def && d) d = false
-        sprite.color = Color(1f/255*r,1f/255*g,1f/255*b,1f)
         playerVelocity.add(0f, Anvil.input.buttonState(ActionButtons.MOVE_UP.name) * speed)
         playerVelocity.add(0f, -Anvil.input.buttonState(ActionButtons.MOVE_DOWN.name)* speed)
         playerVelocity.add(Anvil.input.buttonState(ActionButtons.MOVE_RIGHT.name)* speed, 0f)

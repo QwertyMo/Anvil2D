@@ -2,8 +2,6 @@ package ru.kettuproj.core.input
 
 /**
  * Mouse buttons codes
- *
- * @author QwertyMo
  */
 class MouseButton {
     companion object{

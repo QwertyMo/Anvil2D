@@ -6,7 +6,6 @@ package ru.kettuproj.core.input
  *
  * @param isController flag, if button pressed in controller
  * @param key key code.
- * @author QwertyMo
  *
  * @see ru.kettuproj.core.input.InputCombiner
  */

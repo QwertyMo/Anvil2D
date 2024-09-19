@@ -8,8 +8,6 @@ import kotlin.math.atan2
 
 /**
  * Anvil object, put on scene. All objects at scene must extend it
- *
- * @author QwertyMo
  */
 abstract class AnvilObject: IAnvilObject {
 
@@ -28,8 +26,6 @@ abstract class AnvilObject: IAnvilObject {
     /**
      * Position of object.
      * To change it, use move() and translate() functions
-     *
-     * @author QwertyMo
      */
     val position    : Vector2   = Vector2(0f,0f)
 
@@ -38,8 +34,6 @@ abstract class AnvilObject: IAnvilObject {
     /**
      * Position of parent object.
      * Used for better moving and rotating children objects
-     *
-     * @author QwertyMo
      */
     val parentPos   : Vector2   = Vector2(0f,0f)
 
@@ -51,29 +45,22 @@ abstract class AnvilObject: IAnvilObject {
     /**
      * Rotation of object. If you need to rotate object
      * to point, use lookAt() function
-     *
-     * @author QwertyMo
      */
     open var rotation    : Float     = 0f
         set(value) {
             renderRotation = field
             renderRotationVelocity = value - rotation
-            println("value: $value rotation: $rotation velocity: $renderRotationVelocity")
             field = value
         }
 
     /**
      * UUID of object. Randomize it when initialize
-     *
-     * @author QwertyMo
      */
     val uuid: UUID = UUID.randomUUID()
 
     /**
      * Velocity of object in current tick. Edited by move() function.
      * Update in update() function
-     *
-     * @author QwertyMo
      */
     protected val velocity: Vector2 = Vector2(0f,0f)
 
@@ -86,8 +73,6 @@ abstract class AnvilObject: IAnvilObject {
 
     /**
      * List of objects, bind to this object
-     *
-     * @author QwertyMo
      */
     protected val objects: MutableMap<String, AnvilObject> = mutableMapOf()
 
@@ -111,8 +96,6 @@ abstract class AnvilObject: IAnvilObject {
      * Rotate object to position
      *
      * @param pos Position to rotate
-     *
-     * @author QwertyMo
      */
     fun lookAt(pos: Vector2){
         rotation = try{
@@ -124,8 +107,6 @@ abstract class AnvilObject: IAnvilObject {
 
     /**
      * Logic update of object
-     *
-     * @author QwertyMo
      */
     override fun update(){
         logic()
@@ -165,8 +146,6 @@ abstract class AnvilObject: IAnvilObject {
      *
      * @param x X-Axis
      * @param y Y-Axis
-     *
-     * @author QwertyMo
      */
     open fun move(x: Float, y: Float){
         velocity.add(x, y)
@@ -176,8 +155,6 @@ abstract class AnvilObject: IAnvilObject {
      * Move object
      *
      * @param vel movement velocity
-     *
-     * @author QwertyMo
      */
     open fun move(vel: Vector2){
         velocity.add(vel.x, vel.y)
@@ -188,8 +165,6 @@ abstract class AnvilObject: IAnvilObject {
      *
      * @param x X-Axis
      * @param y Y-Axis
-     *
-     * @author QwertyMo
      */
     open fun translate(x: Float, y: Float){
         position.set(x,y)
@@ -199,8 +174,6 @@ abstract class AnvilObject: IAnvilObject {
      * Translate object to position
      *
      * @param pos position to translate
-     *
-     * @author QwertyMo
      */
     open fun translate(pos: Vector2){
         position.set(pos.x, pos.y)
@@ -208,8 +181,6 @@ abstract class AnvilObject: IAnvilObject {
 
     /**
      * Draw object in scene
-     *
-     * @author QwertyMo
      */
     override fun draw(delta: Float) {
         var temp = delta * scene.getCurrentTPS()

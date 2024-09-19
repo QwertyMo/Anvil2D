@@ -9,8 +9,6 @@ import ru.kettuproj.core.event.AnvilEvent
  * @param value value of action ranging from 0f to 1f
  *
  * @see ru.kettuproj.core.event.EventManager
- *
- * @author QwertyMo
  */
 class InputEvent(
     val action: String,

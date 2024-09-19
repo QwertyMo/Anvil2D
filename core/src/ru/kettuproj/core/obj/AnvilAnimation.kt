@@ -8,15 +8,11 @@ import java.util.logging.Logger
 
 /**
  * Animation system for object
- *
- * @author QwertyMo
  */
 class AnvilAnimation {
 
     /**
      * Animation stop state. If stopped, animation freeze at current frame
-     *
-     * @author QwertyMo
      */
     var stop = false
 
@@ -26,8 +22,6 @@ class AnvilAnimation {
 
     /**
      * Speed of animation from 0.0f to 1.0f
-     *
-     * @author QwertyMo
      */
     var speed: Float = 1f
         set(value){
@@ -37,8 +31,6 @@ class AnvilAnimation {
 
     /**
      * Current animation state
-     *
-     * @author QwertyMo
      */
     var state: String = ""
         set(value){
@@ -53,8 +45,6 @@ class AnvilAnimation {
      * @param name animation state
      * @param animation atlas region array from atlas manager
      *
-     * @author QwertyMo
-     *
      * @see ru.kettuproj.core.atlas.AtlasManager
      */
     fun addState(name: String, animation: com.badlogic.gdx.utils.Array<TextureAtlas.AtlasRegion>){
@@ -63,8 +53,6 @@ class AnvilAnimation {
 
     /**
      * Update animation. Called in AnvilObject
-     *
-     * @author QwertyMo
      */
     fun update(): TextureAtlas.AtlasRegion?{
         //TODO: Maybe need to be optimized

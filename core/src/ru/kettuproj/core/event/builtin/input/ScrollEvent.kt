@@ -8,8 +8,6 @@ import ru.kettuproj.core.event.AnvilEvent
  * @param value scroll value ranging from -1f to 1f
  *
  * @see ru.kettuproj.core.event.EventManager
- *
- * @author QwertyMo
  */
 class ScrollEvent(
     val value: Float

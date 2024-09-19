@@ -8,8 +8,6 @@ abstract class LightObject : AnvilObject() {
 
     /**
      * Light system of object
-     *
-     * @author QwertyMo
      */
     var light: AnvilLight? = null
 
@@ -21,7 +19,6 @@ abstract class LightObject : AnvilObject() {
         super.draw(delta)
         light?.translate(renderPos.x, renderPos.y)
         light?.setAngle(renderRotation)
-        println("rend rot: $renderRotation\nreal rot: $rotation")
     }
 
 }

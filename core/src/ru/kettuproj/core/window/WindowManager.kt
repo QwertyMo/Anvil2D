@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2
 
 /**
  * Windows manager class. Control window settings
- *
- * @author QwertyMo
  */
 class WindowManager {
 
@@ -16,8 +14,6 @@ class WindowManager {
 
     /**
      * Update window state
-     *
-     * @author QwertyMo
      */
     fun update(){
         setFullscreen(fullscreen)
@@ -28,8 +24,6 @@ class WindowManager {
      * Set fullscreen mode
      *
      * @param fullscreen is window in fullscreen mode
-     *
-     * @author QwertyMo
      */
     fun setFullscreen(fullscreen: Boolean){
         this.fullscreen = fullscreen
@@ -41,8 +35,6 @@ class WindowManager {
      * Checks fullscreen mode
      *
      * @return fullscreen mode
-     *
-     * @author QwertyMo
      */
     fun isFullscreen():Boolean{
         return fullscreen
@@ -52,8 +44,6 @@ class WindowManager {
      * Set window size in pixels
      *
      * @param size size of window
-     *
-     * @author QwertyMo
      */
     fun setWindowSize(size: Vector2){
         this.size = size
@@ -64,8 +54,6 @@ class WindowManager {
      * Set screen ratio
      *
      * @param ratio ratio
-     *
-     * @author QwertyMo
      */
     fun setRatio(ratio: Float){
         this.ratio = ratio
@@ -76,8 +64,6 @@ class WindowManager {
      * Get screen ration
      *
      * @return ratio
-     *
-     * @author QwertyMo
      */
     fun getRatio():Float{
         return ratio
@@ -87,8 +73,6 @@ class WindowManager {
      * Set window title
      *
      * @param title title
-     *
-     * @author QwertyMo
      */
     fun setTitle(title: String){
         Gdx.graphics.setTitle(title)
@@ -98,8 +82,6 @@ class WindowManager {
      * Set FPS limit
      *
      * @param fps FPS limit
-     *
-     * @author QwertyMo
      */
     fun setMaxFPS(fps: Int){
         Gdx.graphics.setForegroundFPS(fps)
@@ -109,8 +91,6 @@ class WindowManager {
      * Set vsync mode
      *
      * @param enable is vsync enabled
-     *
-     * @author QwertyMo
      */
     fun setVSync(enable: Boolean){
         Gdx.graphics.setVSync(enable)

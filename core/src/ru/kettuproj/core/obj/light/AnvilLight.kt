@@ -12,8 +12,6 @@ import ru.kettuproj.core.scene.AnvilScene
  * Light system for object in scene. Initialized in AnvilObject
  *
  * @param scene scene where light object need to be placed
- *
- * @author QwertyMo
  */
 class AnvilLight(
     private val scene: AnvilScene
@@ -24,8 +22,6 @@ class AnvilLight(
 
     /**
      * Color of lighting. Default it white
-     *
-     * @author QwertyMo
      */
     var color: Color = Color.WHITE
         set(value) {
@@ -36,8 +32,6 @@ class AnvilLight(
     //TODO: Cast distance to scene distances
     /**
      * Distance of lighting
-     *
-     * @author QwertyMo
      */
     var distance: Float = 100f
         set(value) {
@@ -47,8 +41,6 @@ class AnvilLight(
 
     /**
      * Degree of cone light
-     *
-     * @author QwertyMo
      */
     var degree: Float = 45f
         set(value) {

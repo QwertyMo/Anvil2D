@@ -8,8 +8,6 @@ import java.io.File
 
 /**
  * Font manager class for manage fonts loading
- *
- * @author QwertyMo
  */
 class FontManager(private val assets: List<String>) {
     private val fonts: MutableMap<String, FreeTypeFontGenerator> = mutableMapOf()
@@ -19,8 +17,6 @@ class FontManager(private val assets: List<String>) {
      *
      * @param path path to font
      * @param name name
-     *
-     * @author QwertyMo
      */
     fun register(path: String, name: String){
         fonts[name] = FreeTypeFontGenerator(Gdx.files.internal(path))
@@ -30,8 +26,6 @@ class FontManager(private val assets: List<String>) {
     /**
      * Auto registering of fonts. For names use fonts names.
      * Font names must not be duplicated, otherwise they will overwrite each other
-     *
-     * @author QwertyMo
      */
     fun autoRegister(){
         Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start auto registering fonts from internal storage")
@@ -45,8 +39,6 @@ class FontManager(private val assets: List<String>) {
      * Get font by name
      *
      * @param name name
-     *
-     * @author QwertyMo
      */
     fun getFont(name: String): FreeTypeFontGenerator? {
         return fonts[name]

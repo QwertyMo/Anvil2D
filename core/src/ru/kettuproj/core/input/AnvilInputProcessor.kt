@@ -9,8 +9,6 @@ import ru.kettuproj.core.event.builtin.input.ScrollEvent
 
 /**
  * Default input processor. Call builtin events for keyboard and mouse
- *
- * @author QwertyMo
  */
 class AnvilInputProcessor : InputProcessor {
 

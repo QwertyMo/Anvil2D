@@ -9,8 +9,6 @@ import ru.kettuproj.core.event.builtin.input.MouseMoveEvent
 /**
  * Input manager. Contains functions to get all inputs in game
  *
- * @author QwertyMo
- *
  * @see ru.kettuproj.core.Anvil.input
  */
 class InputManager{
@@ -27,8 +25,6 @@ class InputManager{
 
     /**
      * Listen registered actions and mouse
-     *
-     * @author QwertyMo
      */
     private fun listenActions(){
         //Listen input actions

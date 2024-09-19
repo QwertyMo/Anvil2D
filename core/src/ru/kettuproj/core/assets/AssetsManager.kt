@@ -10,6 +10,10 @@ import java.nio.file.FileSystem
 import java.nio.file.FileSystems
 import kotlin.io.path.*
 
+
+/**
+ * Load and manage all assets of game
+ */
 class AssetsManager {
 
     companion object{
@@ -18,17 +22,29 @@ class AssetsManager {
         const val ENGINE_DIR = "engine/"
     }
 
+    /**
+     * List of all assets paths
+     */
     private val assets = loadAssets()
 
+    /**
+     * Atlas manager
+     */
     val atlas: AtlasManager = AtlasManager(assets)
+
+    /**
+     * Audio manager
+     */
     val audio: AudioManager = AudioManager(assets)
+
+    /**
+     * Font manager
+     */
     val font : FontManager  = FontManager(assets)
 
 
     /**
      * Dispose assets
-     *
-     * @author QwertyMo
      */
     fun dispose(){
         atlas.disposeAtlases()
@@ -40,8 +56,6 @@ class AssetsManager {
 
     /**
      * Auto register assets
-     *
-     * @author QwertyMo
      */
     fun autoRegister(){
         Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start auto registering assets")
@@ -50,6 +64,11 @@ class AssetsManager {
         font.autoRegister()
     }
 
+    /**
+     * Loading assets at startup
+     *
+     * @return all assets paths
+     */
     private fun loadAssets(): List<String>{
         Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start search all internal assets")
         val uri = this::class.java.getResource("/assets")?.toURI() ?: return listOf()
@@ -64,6 +83,15 @@ class AssetsManager {
         return assetsList
     }
 
+
+    /**
+     * Search assets at path using filesystem
+     *
+     * @param filesystem where to search
+     * @param path path where to search
+     *
+     * @return list of assets paths
+     */
     private fun search(filesystem: FileSystem, path: String): List<String>{
         val list = mutableListOf<String>()
         for(entity in filesystem.getPath(path).listDirectoryEntries())
@@ -72,6 +100,14 @@ class AssetsManager {
         return list
     }
 
+
+    /**
+     * Search assets at path
+     *
+     * @param path path where to search
+     *
+     * @return list of assets paths
+     */
     private fun search(path: String): List<String>{
         val list = mutableListOf<String>()
         val file = File(path)

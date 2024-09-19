@@ -10,15 +10,11 @@ abstract class ShapeObject : AnvilObject() {
 
     /**
      * Size of object
-     *
-     * @author QwertyMo
      */
     val size        : Vector2 = Vector2(0f,0f)
 
     /**
      * Color of shape. Default it white
-     *
-     * @author QwertyMo
      */
     var color: Color = Color.WHITE
         set(value) {

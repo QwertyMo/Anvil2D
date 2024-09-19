@@ -9,8 +9,6 @@ import ru.kettuproj.core.event.AnvilEvent
  * @param game anvil initialized class
  *
  * @see ru.kettuproj.core.event.EventManager
- *
- * @author QwertyMo
  */
 class OnGameRunEvent(
     val game: Anvil

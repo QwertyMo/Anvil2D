@@ -6,7 +6,7 @@ import ru.kettuproj.core.event.builtin.OnGameRunEvent
 import ru.kettuproj.game.input.KeyBind
 import ru.kettuproj.game.scene.game.GameScene
 
-class Anviltato: Anvil() {
+class KettuSurvivors: Anvil() {
     init {
         eventManager.listen(object : EventListener<OnGameRunEvent> {
             override fun handle(event: OnGameRunEvent) {

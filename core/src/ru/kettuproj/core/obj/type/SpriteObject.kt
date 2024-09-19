@@ -10,23 +10,17 @@ abstract class SpriteObject: AnvilObject() {
 
     /**
      * Object scale
-     *
-     * @author QwertyMo
      */
     val scale       : Vector2   = Vector2(1f,1f)
 
     /**
      * Size of object
-     *
-     * @author QwertyMo
      */
     val size        : Vector2 = Vector2(0f,0f)
 
     /**
      * Sprite of object.
      * Automatically set size of object
-     *
-     * @author QwertyMo
      */
     var sprite   : AnvilSprite = AnvilSprite()
         set(value) {
@@ -36,16 +30,12 @@ abstract class SpriteObject: AnvilObject() {
 
     /**
      * Animation of object
-     *
-     * @author QwertyMo
      */
     var animation: AnvilAnimation = AnvilAnimation()
 
     /**
      * Set sprite settings.
      * Get size of sprite, and set it to object
-     *
-     * @author QwertyMo
      */
     private fun setSpriteSettings(){
         size.set(sprite.sprite.width,sprite.sprite.height)

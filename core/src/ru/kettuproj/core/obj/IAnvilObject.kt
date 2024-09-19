@@ -2,8 +2,6 @@ package ru.kettuproj.core.obj
 
 /**
  * AnvilObject interface
- *
- * @author QwertyMo
  */
 interface IAnvilObject {
 

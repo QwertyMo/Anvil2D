@@ -4,8 +4,6 @@ import kotlin.reflect.KClass
 
 /**
  * Event manager, allows you to listen and call events
- *
- * @author QwertyMo
  */
 class EventManager {
 
@@ -14,11 +12,9 @@ class EventManager {
     */
     val listeners: MutableMap<KClass<*>, MutableList<EventListener<out AnvilEvent>>> = mutableMapOf()
 
-    //TODO: Add param and sample to listener in EventManager
     /**
      * Event listener. Handle initialized event
-     *
-     * @author QwertyMo
+     * Check example game to see, how to use this
      */
     inline fun <reified T : AnvilEvent> listen(listener: EventListener<T>) {
         val eventClass = T::class
@@ -26,15 +22,13 @@ class EventManager {
         eventListeners.add(listener)
     }
 
-    //TODO: Add sample to call in EventManager
     /**
      * Call event, that handled in listener
+     * Check example game to see, how to use this
      *
      * @param event AnvilEvent with call params
      *
      * @see ru.kettuproj.core.event.AnvilEvent
-     *
-     * @author QwertyMo
      */
     inline fun <reified T: AnvilEvent> call(event: T) {
         listeners[event::class]?.asSequence()

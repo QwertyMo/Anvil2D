@@ -56,8 +56,7 @@ abstract class TextObject : AnvilObject() {
         try {
             font = fontGen.generateFont(param)
             glyphLayout.setText(font, text)
-        }catch (e:Exception){
-        }
+        }catch (_:Exception){ }
         fontGen.dispose()
         font?.data?.setScale(scale)
 

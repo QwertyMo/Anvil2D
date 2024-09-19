@@ -46,7 +46,7 @@ class GameScene : AnvilScene() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         rayHandler.setAmbientLight(.5f)
-        setTickRate(20)
+        setTickRate(30)
         Anvil.eventManager.listen(object : EventListener<InputEvent> {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)
@@ -71,18 +71,4 @@ class GameScene : AnvilScene() {
         //sound.setPan(id, ang/90 - 1, if(!mute) 1/(dist/range) else 0.0f)
 
     }
-}
-
-class testObj: SpriteObject(){
-    override fun render() {
-
-    }
-
-    override fun logic() {
-    }
-
-    override fun create() {
-        sprite = AnvilSprite("obj", "obj_tint")
-    }
-
 }

@@ -8,8 +8,6 @@ import java.io.File
 
 /**
  * Audio manager class for manage sounds loading
- *
- * @author QwertyMo
  */
 class AudioManager(private val assets: List<String>) {
     private val sounds: MutableMap<String, Sound> = mutableMapOf()
@@ -19,8 +17,6 @@ class AudioManager(private val assets: List<String>) {
      *
      * @param path path to sound
      * @param name name
-     *
-     * @author QwertyMo
      */
     fun register(path: String, name: String){
         sounds[name] = Gdx.audio.newSound(Gdx.files.internal(path))
@@ -30,8 +26,6 @@ class AudioManager(private val assets: List<String>) {
     /**
      * Auto registering of sounds. For names use sounds names.
      * Sound names must not be duplicated, otherwise they will overwrite each other
-     *
-     * @author QwertyMo
      */
     fun autoRegister(){
         Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start auto registering sounds from internal storage")
@@ -45,8 +39,6 @@ class AudioManager(private val assets: List<String>) {
 
     /**
      * Dispose all sounds
-     *
-     * @author QwertyMo
      */
     fun disposeAll(){
         sounds.forEach{
@@ -61,8 +53,6 @@ class AudioManager(private val assets: List<String>) {
      * Dispose sound
      *
      * @param name name
-     *
-     * @author QwertyMo
      */
     fun disposeSound(name: String){
         sounds[name]?.dispose()
@@ -73,8 +63,6 @@ class AudioManager(private val assets: List<String>) {
      * Get sound by name
      *
      * @param name name
-     *
-     * @author QwertyMo
      */
     fun getSound(name:String):Sound?{
         return sounds[name]

@@ -22,8 +22,6 @@ import kotlin.math.roundToInt
  * All scened need to extend by this
  *
  * @param ratio scene ratio
- *
- * @author QwertyMo
  */
 open class AnvilScene(
     private val ratio: Float = 1f
@@ -96,8 +94,6 @@ open class AnvilScene(
      * Zoom camera at value
      *
      * @param value zoom value
-     *
-     * @author QwertyMo
      */
     fun zoom(value: Float){
         camera.zoom+=value
@@ -107,8 +103,6 @@ open class AnvilScene(
      * Set camera zoom
      *
      * @param value zoom value
-     *
-     * @author QwertyMo
      */
     fun setZoom(value: Float){
         camera.zoom = value
@@ -118,8 +112,6 @@ open class AnvilScene(
      * Get cursor position in world
      *
      * @return cursor position
-     *
-     * @author QwertyMo
      */
     fun getCursor():Vector2{
         return Vector2(
@@ -132,8 +124,6 @@ open class AnvilScene(
      * Set tick rate on scene
      *
      * @param value tickrate
-     *
-     * @author QwertyMo
      */
     fun setTickRate(value: Int){
         tickrate = value
@@ -153,8 +143,6 @@ open class AnvilScene(
      *
      * @param x X-Axis
      * @param y Y-Axis
-     *
-     * @author QwertyMo
      */
     fun moveCamera(x: Float, y: Float){
         cameraPos.add(x,y)
@@ -164,8 +152,6 @@ open class AnvilScene(
      * Move camera from it position
      *
      * @param velocity velocity
-     *
-     * @author QwertyMo
      */
     fun moveCamera(velocity: Vector2){
         cameraPos.add(velocity.x,velocity.y)
@@ -176,8 +162,6 @@ open class AnvilScene(
      *
      * @param x X-Axis
      * @param y Y-Axis
-     *
-     * @author QwertyMo
      */
     fun translateCamera(x: Float, y: Float){
         cameraPos.set(x,y)
@@ -187,8 +171,6 @@ open class AnvilScene(
      * Translate camera to position
      *
      * @param pos position where need to translate camera
-     *
-     * @author QwertyMo
      */
     fun translateCamera(pos: Vector2){
         cameraPos.set(pos.x,pos.y)
@@ -196,8 +178,6 @@ open class AnvilScene(
 
     /**
      * Update camera
-     *
-     * @author QwertyMo
      */
     private fun updateCamera(){
         camera.position.set(cameraPos.x,cameraPos.y,0f)
@@ -206,8 +186,6 @@ open class AnvilScene(
 
     /**
      * Render objects and rays
-     *
-     * @author QwertyMo
      */
     private fun renderScene(delta: Float){
         ScreenUtils.clear(0f, 0f, 0f, 1f)
@@ -218,8 +196,6 @@ open class AnvilScene(
 
     /**
      * Debug render of Box2D colliders
-     *
-     * @author QwertyMo
      */
     private fun renderDebug(){
         debugRenderer.render(world,camera.combined)
@@ -227,8 +203,6 @@ open class AnvilScene(
 
     /**
      * Light rendering
-     *
-     * @author QwertyMo
      */
     private fun renderRays(){
         rayHandler.useCustomViewport(viewport.screenX,viewport.screenY,viewport.screenWidth, viewport.screenHeight)
@@ -238,8 +212,6 @@ open class AnvilScene(
 
     /**
      * Object rendering
-     *
-     * @author QwertyMo
      */
     private fun renderObjects(delta: Float){
         batch.projectionMatrix = camera.combined
@@ -265,12 +237,10 @@ open class AnvilScene(
      * Game update loop. Update render, and try to update logic
      *
      * @param delta delta time
-     *
-     * @author QwertyMo
      */
     override fun render(delta: Float) {
         try {
-            if(Anvil.discord.isInstalled) Anvil.discord.api?.runCallbacks()
+            if(Anvil.discord.isActive) Anvil.discord.api?.runCallbacks()
         }catch (e: Exception){}
         accumulator += delta
         skippedFrames = 0
@@ -296,8 +266,6 @@ open class AnvilScene(
 
     /**
      * Update game logic
-     *
-     * @author QwertyMo
      */
     private fun updateState(){
         accumulator -= timeStep
