@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
@@ -14,6 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import ru.kettuproj.core.Anvil
+import ru.kettuproj.core.common.ShapeRenderer
 import ru.kettuproj.core.obj.AnvilObject
 import kotlin.math.roundToInt
 
@@ -42,7 +42,7 @@ open class AnvilScene(
     val shapeRenderer   : ShapeRenderer                   = ShapeRenderer()
 
 
-    val camera      : OrthographicCamera              = OrthographicCamera()
+    val camera      : OrthographicCamera                      = OrthographicCamera()
     private val viewport    : Viewport                        = FitViewport(resolution.x,resolution.y,camera)
     private val cameraPos   : Vector2                         = Vector2(0f,0f)
 
