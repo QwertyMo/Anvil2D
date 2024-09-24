@@ -38,7 +38,6 @@ class GameScene : AnvilScene() {
         box.translate(0f, 0f)
         col.size.set(16f,16f)
         col.translate(48f,48f)
-        println(col.debugPosition())
 
         setZoom(.5f)
         width = 512f
@@ -46,7 +45,7 @@ class GameScene : AnvilScene() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         rayHandler.setAmbientLight(.5f)
-        setTickRate(30)
+        setTickRate(5)
         Anvil.eventManager.listen(object : EventListener<InputEvent> {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)

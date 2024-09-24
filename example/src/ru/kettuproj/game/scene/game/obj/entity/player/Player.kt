@@ -1,26 +1,23 @@
 package ru.kettuproj.game.scene.game.obj.entity.player
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.obj.sprite.AnvilSprite
+import ru.kettuproj.core.obj.type.ShapeObject
 import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.game.input.ActionButtons
-import ru.kettuproj.game.scene.game.obj.common.Box
 import ru.kettuproj.game.scene.game.obj.common.Colis
-import ru.kettuproj.game.scene.game.obj.common.Flashlight
 
-class Player : SpriteObject() {
+class Player : ShapeObject() {
 
     private val playerVelocity = Vector2(0f,0f)
     private val colision = Colis()
     val speed = 3f
 
     override fun create() {
-        sprite = AnvilSprite("obj", "obj_tint")
+        size.set(32f,32f)
         createObject(colision, "col")
         colision.size.set(size.x, size.y)
-
     }
 
     override fun logic() {
@@ -36,6 +33,6 @@ class Player : SpriteObject() {
     }
 
     override fun render() {
-        //println(renderRotation)
+
     }
 }
