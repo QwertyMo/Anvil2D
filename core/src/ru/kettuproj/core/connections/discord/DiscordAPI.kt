@@ -2,9 +2,9 @@ package ru.kettuproj.core.connections.discord
 
 import de.jcm.discordgamesdk.Core
 import de.jcm.discordgamesdk.CreateParams
+import de.jcm.discordgamesdk.LogLevel
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
-import ru.kettuproj.core.exception.DiscordException
 
 
 /**
@@ -41,7 +41,9 @@ class DiscordAPI {
             params.clientID = clientId
             params.flags = CreateParams.getDefaultFlags()
             try{
-                Core(params).let {
+                val core = Core(params)
+                core.setLogHook(LogLevel.VERBOSE) { _: LogLevel?, _: String? -> }
+                core.let {
                     api = it
                     activity = Activity(it)
                     isActive = true
