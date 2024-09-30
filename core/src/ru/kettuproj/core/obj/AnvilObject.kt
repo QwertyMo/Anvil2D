@@ -68,7 +68,7 @@ abstract class AnvilObject: IAnvilObject {
     protected var renderRotation: Float = 0f
     protected var renderRotationVelocity: Float = 0f
     private val renderVelocity: Vector2 = Vector2(0f, 0f)
-    protected val renderPos: Vector2 = Vector2(0f,0f)
+    protected open val renderPos: Vector2 = Vector2(0f,0f)
     private var renderDelta: Float = 0f
 
     /**
@@ -202,6 +202,7 @@ abstract class AnvilObject: IAnvilObject {
             obj.value.draw(delta)
         }
     }
+
 
     fun debugPosition() : String{
         return "Object $name with UUID $uuid\n    " +

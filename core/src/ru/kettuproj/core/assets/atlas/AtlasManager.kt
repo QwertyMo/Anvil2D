@@ -21,7 +21,7 @@ class AtlasManager(private val assets: List<String>) {
     /**
      * Store loaded animations
      */
-    private val animations  : MutableMap<String, com.badlogic.gdx.utils.Array<AtlasRegion>> = mutableMapOf()
+    private val animations  : MutableMap<String, Array<AtlasRegion>> = mutableMapOf()
 
     /**
      * Store loaded sprites
@@ -94,7 +94,7 @@ class AtlasManager(private val assets: List<String>) {
      */
     fun registerAnimation(atlas: String, region: String, name: String){
         try{
-            animations[name] = atlases[atlas]!!.findRegions(region)
+            animations[name] = atlases[atlas]!!.findRegions(region).toArray()
             Logger.getLogger(this.javaClass.name).log(Level.INFO, "Register animation [$name]")
         }catch (e: Exception){
             Logger.getLogger(this.javaClass.name).log(Level.WARN,"Can't initialize animation $name: ${e.message}")
@@ -109,7 +109,7 @@ class AtlasManager(private val assets: List<String>) {
      *
      * @return array of atlas regions, if it registered
      */
-    fun getAnimation(name: String):com.badlogic.gdx.utils.Array<AtlasRegion>?{
+    fun getAnimation(name: String):Array<AtlasRegion>?{
         return animations[name]
     }
 

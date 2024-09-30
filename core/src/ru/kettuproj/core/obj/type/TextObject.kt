@@ -10,15 +10,15 @@ import ru.kettuproj.core.obj.AnvilObject
 
 abstract class TextObject : AnvilObject() {
 
+    private var font: BitmapFont? = null
+
     var text:  String = ""
         set(value){
             param.characters = text
             field = value
         }
+
     var scale: Float = 0.5f
-        set(value) {
-            field = value
-        }
 
     var resolution: Int = 32
         set(value){
@@ -48,7 +48,7 @@ abstract class TextObject : AnvilObject() {
     override fun create() {
 
     }
-    var font: BitmapFont? = null
+
     override fun draw(delta: Float) {
         font?.dispose()
         val fontGen = FreeTypeFontGenerator(Gdx.files.internal("${AssetsManager.ENGINE_DIR}${AssetsManager.DEFAULT_FONT}"))

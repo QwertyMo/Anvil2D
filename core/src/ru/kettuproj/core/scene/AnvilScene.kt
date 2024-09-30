@@ -27,7 +27,13 @@ open class AnvilScene(
     private val ratio: Float = 1f
 ) : Screen {
 
+    /**
+     * Multiply object moving. Change this when you changing TPS, because
+     * TPS changing cause slowing of all scene
+     */
     var moveMultiplier  : Float = 100f
+
+
     var width           : Float = 1024f
         set(value){
             resolution = Vector2(value, value * ratio)
@@ -64,6 +70,10 @@ open class AnvilScene(
     private var deltaFPSUpdates     : Int   = 0
     private var currentFPS          : Int   = 0
 
+
+    /**
+     * Render debug lines for Box2D physics
+     */
     private val debugRenderer: Box2DDebugRenderer = Box2DDebugRenderer(
         true,
         true,

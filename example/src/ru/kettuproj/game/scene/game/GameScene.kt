@@ -6,9 +6,6 @@ import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
 import ru.kettuproj.core.event.EventListener
 import ru.kettuproj.core.event.builtin.input.InputEvent
-import ru.kettuproj.core.obj.AnvilObject
-import ru.kettuproj.core.obj.sprite.AnvilSprite
-import ru.kettuproj.core.obj.type.SpriteObject
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot
@@ -33,11 +30,9 @@ class GameScene : AnvilScene() {
     val player = createObject(Player(), "player") as Player
     val text = createObject(TPSText(), "tps_text") as TPSText
     val col = createObject(Colis(), "Col") as Colis
-     val box = createObject(Box(), "box") as Box
+    val box = createObject(Box(), "box") as Box
     init{
-        box.translate(0f, 0f)
-        col.size.set(16f,16f)
-        col.translate(48f,48f)
+        box.translate(20f, 20f)
 
         setZoom(.5f)
         width = 512f
@@ -45,7 +40,7 @@ class GameScene : AnvilScene() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);
 
         rayHandler.setAmbientLight(.5f)
-        setTickRate(5)
+        setTickRate(20)
         Anvil.eventManager.listen(object : EventListener<InputEvent> {
             override fun handle(event: InputEvent) {
                 val action = ActionButtons.valueOf(event.action)

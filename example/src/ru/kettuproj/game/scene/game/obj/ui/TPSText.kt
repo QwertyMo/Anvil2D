@@ -5,7 +5,7 @@ import kotlin.math.roundToInt
 
 class TPSText : TextObject() {
     init {
-        scale = 1f
+        scale = 0.5f
     }
 
     override fun render() {

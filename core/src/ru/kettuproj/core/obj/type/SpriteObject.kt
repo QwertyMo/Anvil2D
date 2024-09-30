@@ -1,6 +1,5 @@
 package ru.kettuproj.core.obj.type
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.obj.AnvilAnimation
 import ru.kettuproj.core.obj.AnvilObject
@@ -14,7 +13,7 @@ abstract class SpriteObject: AnvilObject() {
     val scale       : Vector2   = Vector2(1f,1f)
 
     /**
-     * Size of object
+     * Size of object. When you set sprite, it automatically sets size
      */
     val size        : Vector2 = Vector2(0f,0f)
 
@@ -29,7 +28,7 @@ abstract class SpriteObject: AnvilObject() {
         }
 
     /**
-     * Animation of object
+     * Animation of object. See more at AnvilAnimation
      */
     var animation: AnvilAnimation = AnvilAnimation()
 

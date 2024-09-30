@@ -1,12 +1,13 @@
 package ru.kettuproj.game.scene.game.obj.common
 
-import ru.kettuproj.core.obj.type.ShapeObject
+import com.badlogic.gdx.graphics.Color
+import ru.kettuproj.core.obj.type.shape.polygon.SquareObject
 
-class Box : ShapeObject() {
+class Box : SquareObject() {
 
     override fun create() {
-        size.set(1f, 1f)
-        dynamicRotation = true
+        size.set(20f, 20f)
+        color = Color.BROWN
     }
 
     override fun render() {
@@ -14,7 +15,7 @@ class Box : ShapeObject() {
     }
 
     override fun logic() {
-
+        rotation+=1
     }
 
 }
