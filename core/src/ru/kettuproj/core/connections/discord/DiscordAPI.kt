@@ -3,6 +3,8 @@ package ru.kettuproj.core.connections.discord
 import de.jcm.discordgamesdk.Core
 import de.jcm.discordgamesdk.CreateParams
 import de.jcm.discordgamesdk.LogLevel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 
@@ -36,6 +38,7 @@ class DiscordAPI {
      * @param clientId client ID from app at Discord developer portal
      */
     fun initialize(clientId:Long){
+        GlobalScope.launch {
             Logger.getLogger(this.javaClass.name).log(Level.INFO, "Start initializing discord API")
             val params = CreateParams()
             params.clientID = clientId
@@ -54,5 +57,7 @@ class DiscordAPI {
                 Logger.getLogger(this.javaClass.name).log(Level.WARN, "Discord API is not initialized. Reason: $e")
             }
         }
+
+    }
 
 }
