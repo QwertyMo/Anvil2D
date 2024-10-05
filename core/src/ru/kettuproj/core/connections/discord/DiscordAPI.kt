@@ -44,8 +44,7 @@ class DiscordAPI {
             params.clientID = clientId
             params.flags = CreateParams.getDefaultFlags()
             try{
-                val core = Core(params)
-                core.setLogHook(LogLevel.VERBOSE) { _: LogLevel?, _: String? -> }
+                val core = Core(params, LogLevel.VERBOSE) { _: LogLevel?, _: String? ->}
                 core.let {
                     api = it
                     activity = Activity(it)

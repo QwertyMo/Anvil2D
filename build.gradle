@@ -60,7 +60,7 @@ project(":core") {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         implementation("org.slf4j:slf4j-log4j12:2.0.3")
 
-        implementation 'com.github.JnCrMx:discord-game-sdk4j:5cdac341e3'
+        implementation 'com.github.QwertyMo:discord-game-sdk4j:-SNAPSHOT'
 
         implementation("org.apache.commons:commons-lang3:3.12.0")
         implementation("commons-io:commons-io:2.11.0")
