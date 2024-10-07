@@ -64,12 +64,12 @@ abstract class AnvilObject: IAnvilObject {
      */
     protected val velocity: Vector2 = Vector2(0f,0f)
 
-    private val renderParentPos: Vector2 = Vector2(0f,0f)
+    protected val renderParentPos: Vector2 = Vector2(0f,0f)
     protected var renderRotation: Float = 0f
     protected var renderRotationVelocity: Float = 0f
-    private val renderVelocity: Vector2 = Vector2(0f, 0f)
+    protected val renderVelocity: Vector2 = Vector2(0f, 0f)
     protected open val renderPos: Vector2 = Vector2(0f,0f)
-    private var renderDelta: Float = 0f
+    protected var renderDelta: Float = 0f
 
     /**
      * List of objects, bind to this object
@@ -111,21 +111,16 @@ abstract class AnvilObject: IAnvilObject {
     override fun update(){
         logic()
         renderDelta = 0f
-        //renderRotationVelocity = 0f
         renderVelocity.set(velocity.x, velocity.y)
         if(dynamicRotation) {
             val rotated = Vector2(
                 (position.x * MathUtils.cos((rotation * Math.PI / 180f).toFloat())) + (position.y * MathUtils.cos((rotation * Math.PI / 180f).toFloat())),
                 (position.y * MathUtils.sin((rotation * Math.PI / 180f).toFloat())) + (position.x * MathUtils.sin((rotation * Math.PI / 180f).toFloat()))
             )
-            //renderPos.set(rotated.x + renderParentPos.x, rotated.y + renderParentPos.y)
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(rotated.x + parentPos.x, rotated.y + parentPos.y)
         }
         else {
-            //renderPos.set(position.x + renderParentPos.x, position.y + renderParentPos.y)
-            //renderRotation = rotation
-
             translate(position.x + velocity.x, position.y + velocity.y)
             realPos.set(position.x + parentPos.x, position.y + parentPos.y)
         }
@@ -190,7 +185,6 @@ abstract class AnvilObject: IAnvilObject {
             renderDelta = 1f
         }
         renderRotation += renderRotationVelocity * temp
-        //if(name == "player") println(renderRotationVelocity)
         renderPos.set(
             ((realPos.x - renderVelocity.x) + renderParentPos.x + renderDelta * renderVelocity.x) - parentPos.x,
             ((realPos.y - renderVelocity.y) + renderParentPos.y + renderDelta * renderVelocity.y) - parentPos.y

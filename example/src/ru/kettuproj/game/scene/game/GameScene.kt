@@ -10,7 +10,6 @@ import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot
 import ru.kettuproj.game.scene.game.obj.common.Box
-import ru.kettuproj.game.scene.game.obj.common.Colis
 import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import ru.kettuproj.game.scene.game.obj.ui.TPSText
 import kotlin.math.atan2
@@ -29,12 +28,10 @@ class GameScene : AnvilScene() {
     val aim = createObject(AimDot(), "aim") as AimDot
     val player = createObject(Player(), "player") as Player
     val text = createObject(TPSText(), "tps_text") as TPSText
-    val col = createObject(Colis(), "Col") as Colis
     val box = createObject(Box(), "box") as Box
     init{
         box.translate(20f, 20f)
-
-        setZoom(.5f)
+        setZoom(.25f)
         width = 512f
 
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);

@@ -1,27 +1,23 @@
 package ru.kettuproj.game.scene.game.obj.entity.player
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import ru.kettuproj.core.Anvil
-import ru.kettuproj.core.obj.type.shape.polygon.SquareObject
+import ru.kettuproj.core.obj.type.CollisionObject
 import ru.kettuproj.game.input.ActionButtons
-import ru.kettuproj.game.scene.game.obj.common.Colis
 
-class Player : SquareObject() {
+class Player : CollisionObject() {
 
     private val playerVelocity = Vector2(0f,0f)
-    private val collision = Colis()
+    private val sprite = PlayerSprite()
     val speed = 3f
 
     override fun create() {
-        size.set(8f,8f)
-        color = Color.GREEN
-        createObject(collision, "col")
-        collision.size.set(size.x, size.y)
+        setSize(8f,8f)
+        createObject(sprite, "player_collision")
+        sprite.size.set(getSize().x, getSize().y)
     }
 
     override fun logic() {
-
         playerVelocity.add(0f, Anvil.input.buttonState(ActionButtons.MOVE_UP.name) * speed)
         playerVelocity.add(0f, -Anvil.input.buttonState(ActionButtons.MOVE_DOWN.name)* speed)
         playerVelocity.add(Anvil.input.buttonState(ActionButtons.MOVE_RIGHT.name)* speed, 0f)

@@ -29,7 +29,7 @@ open class AnvilScene(
 
     /**
      * Multiply object moving. Change this when you changing TPS, because
-     * TPS changing cause slowing of all scene
+     * TPS changing cause speed change of all scene
      */
     var moveMultiplier  : Float = 100f
 
@@ -48,7 +48,7 @@ open class AnvilScene(
     val shapeRenderer   : ShapeRenderer                   = ShapeRenderer()
 
 
-    val camera      : OrthographicCamera                      = OrthographicCamera()
+    val camera              : OrthographicCamera              = OrthographicCamera()
     private val viewport    : Viewport                        = FitViewport(resolution.x,resolution.y,camera)
     private val cameraPos   : Vector2                         = Vector2(0f,0f)
 
