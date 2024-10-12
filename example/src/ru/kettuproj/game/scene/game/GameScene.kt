@@ -9,7 +9,7 @@ import ru.kettuproj.core.event.builtin.input.InputEvent
 import ru.kettuproj.core.scene.AnvilScene
 import ru.kettuproj.game.input.ActionButtons
 import ru.kettuproj.game.scene.game.obj.aim.AimDot
-import ru.kettuproj.game.scene.game.obj.common.Box
+import ru.kettuproj.game.scene.game.obj.common.box.Box
 import ru.kettuproj.game.scene.game.obj.entity.player.Player
 import ru.kettuproj.game.scene.game.obj.ui.TPSText
 import kotlin.math.atan2

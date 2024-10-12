@@ -25,7 +25,7 @@ class Player : CollisionObject() {
         move(playerVelocity)
 
         lookAt(scene.getCursor())
-
+        sprite.rotation = rotation
         playerVelocity.set(0f,0f)
     }
 

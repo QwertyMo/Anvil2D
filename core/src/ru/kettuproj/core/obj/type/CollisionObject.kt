@@ -5,10 +5,14 @@ import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.PolygonShape
+import ru.kettuproj.core.common.calcAngle
 import ru.kettuproj.core.exception.AnvilObjectException
 import ru.kettuproj.core.obj.AnvilObject
 import ru.kettuproj.core.obj.ObjectShape
+import ru.kettuproj.core.obj.type.shape.polygon.Polygon
 import ru.kettuproj.core.scene.AnvilScene
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * Collision object, which interact with Box2D, and have physics.
@@ -17,6 +21,29 @@ import ru.kettuproj.core.scene.AnvilScene
  * Use when you want to make collision of object
  */
 abstract class CollisionObject : AnvilObject() {
+
+    var polygon: FloatArray = Polygon.SQUARE
+    private var compiledPolygon: FloatArray = Polygon.SQUARE
+
+    fun updatePolygon(){
+        compiledPolygon = polygon.mapIndexed{ index, v ->
+            val point = Vector2(0f,0f)
+            if(index%2==0){
+                point.y = polygon[index + 1] + (size.y/2 * if(polygon[index + 1]<0) -1 else 1)
+                point.x = v + (size.x/2 * if(v<0) -1 else 1)
+                (point.x) * cos(calcAngle(renderRotation)) - (point.y) * sin(
+                    calcAngle(renderRotation)
+                )
+            }else{
+                point.y = v + (size.x/2 * if(v<0) -1 else 1)
+                point.x = polygon[index - 1] + (size.x/2 * if(polygon[index - 1]<0) -1 else 1)
+                (point.x) * sin(calcAngle(renderRotation)) + (point.y) * cos(
+                    calcAngle(renderRotation)
+                )
+            }
+        }.toFloatArray()
+        setShape()
+    }
 
     /**
      * Object scale. Multiply size
@@ -122,6 +149,7 @@ abstract class CollisionObject : AnvilObject() {
     var bodyType: BodyDef.BodyType = BodyDef.BodyType.DynamicBody
         set(value) {
             setShape()
+            body!!.type = value
             field = value
         }
 
@@ -136,10 +164,9 @@ abstract class CollisionObject : AnvilObject() {
         for(i in body!!.fixtureList)
             body!!.destroyFixture(i)
 
-        //TODO: Переделать на полигоны
         if(shape == ObjectShape.BOX){
             val shape = PolygonShape()
-            shape.setAsBox((size.x * scale.x)/2 , (size.y * scale.y)/2)
+            shape.set(compiledPolygon)
             body!!.createFixture(shape, 0f)
             shape.dispose()
         }
@@ -149,9 +176,9 @@ abstract class CollisionObject : AnvilObject() {
             body!!.createFixture(shape, 0f)
             shape.dispose()
         }
-
         body!!.userData = this
     }
+
 
     override fun translate(pos: Vector2) {
         super.translate(pos)
@@ -167,6 +194,7 @@ abstract class CollisionObject : AnvilObject() {
         logic()
         renderDelta = 0f
         renderVelocity.set(velocity.x, velocity.y)
+        updatePolygon()
         body?.setLinearVelocity(velocity.x * (scene.moveMultiplier), velocity.y * (scene.moveMultiplier))
         position.set((body?.position?.x ?: 0f) - parentPos.x, (body?.position?.y?: 0f) - parentPos.y)
         realPos.set(body?.position?.x ?: 0f, body?.position?.y ?: 0f)
